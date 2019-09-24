@@ -27,40 +27,40 @@ var pictureList = document.querySelector('.pictures');
 
 
 // генерация случайного числа в заданном интервале, включительно
-var getRandomIndex = function(min, max) {
+var getRandomIndex = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
 // генерируем случайный текст случайного коммента
-var getRandomMessage = function(arr) {
+var getRandomMessage = function (arr) {
   var randomMessage = getRandomIndex(0, arr.length);
   return arr[randomMessage];
 };
 
 // генерируем случайное имя
-var getRandomName = function(arr) {
+var getRandomName = function (arr) {
   var randomName = getRandomIndex(0, arr.length);
   return arr[randomName];
 };
 
 // генерируем случайное описание фото
-var getRandomDescription = function(arr) {
+var getRandomDescription = function (arr) {
   var randomDescription = getRandomIndex(0, arr.length);
   return arr[randomDescription];
 };
 
 // функция генерации одного комментария
-var createPhotoComment = function(_avatar, _message, _name) {
+var createPhotoComment = function (_avatar, _message, _name) {
   var comment = {
     avatar: _avatar,
     message: _message,
     name: _name
-  }
+  };
   return comment;
 };
 
-//функция генерации массива комментариев
-var createPhotoComments = function(length) {
+// функция генерации массива комментариев
+var createPhotoComments = function (length) {
   var comments = [];
   for (var i = 0; i <= length; i++) {
     var numberAvatar = 'img/avatar-' + getRandomIndex(1, AVATAR_AMOUNT) + '.svg';
@@ -75,25 +75,25 @@ var createPhotoComments = function(length) {
 var arrComments = createPhotoComments(PHOTOS_AMOUNT);
 
 // функция генерации случайного комментария из массива комментариев
-var getRandomComment = function(arr) {
+var getRandomComment = function (arr) {
   var randomComment = getRandomIndex(0, arr.length);
   return arr[randomComment];
 };
 
 
 // функция создания одного объекта с фото
-var createPhotoObject = function(_url, _description, _likes, _comments) {
+var createPhotoObject = function (_url, _description, _likes, _comments) {
   var photo = {
     url: _url,
     description: _description,
     likes: _likes,
     comment: _comments
-  }
+  };
   return photo;
 };
 
 // функция создания массива объектов с фото
-var createPhotoObjects = function(length) {
+var createPhotoObjects = function (length) {
   var photos = [];
   for (var i = 0; i <= length; i++) {
     var photoUrl = 'photos/' + getRandomIndex(1, PHOTOS_AMOUNT) + '.jpg';
@@ -107,7 +107,7 @@ var createPhotoObjects = function(length) {
 };
 
 // Рендер DOM-элемента на основе объекта
-var renderPicture = function(pictureItem) {
+var renderPicture = function (pictureItem) {
   var pictureElement = templatePictureItem.cloneNode(true);
   var pictureElementImg = pictureElement.querySelector('.picture__img');
 
@@ -119,7 +119,7 @@ var renderPicture = function(pictureItem) {
 };
 
 // Заполнение DOM-элемента на основе массива
-var renderPictureList = function(arrPhotos) {
+var renderPictureList = function (arrPhotos) {
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < arrPhotos.length; i++) {
     fragment.appendChild(renderPicture(arrPhotos[i]));
