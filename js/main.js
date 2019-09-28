@@ -25,7 +25,6 @@ var templatePicture = document.querySelector('#picture');
 var templatePictureItem = templatePicture.content.querySelector('.picture');
 var pictureList = document.querySelector('.pictures');
 
-
 // генерация случайного числа в заданном интервале, включительно
 var getRandomIndex = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -95,8 +94,8 @@ var createPhotoObject = function (_url, _description, _likes, _comments) {
 // функция создания массива объектов с фото
 var createPhotoObjects = function (length) {
   var photos = [];
-  for (var i = 0; i <= length; i++) {
-    var photoUrl = 'photos/' + getRandomIndex(1, PHOTOS_AMOUNT) + '.jpg';
+  for (var i = 0; i < length; i++) {
+    var photoUrl = 'photos/' + (i + 1) + '.jpg';
     var description = getRandomDescription(DESCRIPTION_PHOTOS);
     var likes = getRandomIndex(MIN_LIKES, MAX_LIKES);
     var comment = getRandomComment(arrComments);
@@ -132,3 +131,12 @@ var completedPhotoList = createPhotoObjects(PHOTOS_AMOUNT);
 
 // Отрисовка сгенерированных DOM-элементов
 pictureList.appendChild(renderPictureList(completedPhotoList));
+
+
+//Дополнительное задание
+var bigPicture = document.querySelector('.big-picture');
+var bigPictureCommentsList = bigPicture.querySelector('.social__comments');
+var bigPictureComment = bigPictureCommentsList.querySelector('.social__comment');
+
+
+bigPicture.classList.remove('hidden');
