@@ -19,6 +19,8 @@ var PHOTOS_AMOUNT = 25;
 var AVATAR_AMOUNT = 6;
 var MIN_LIKES = 15;
 var MAX_LIKES = 200;
+var ESC_KEYCODE = 27;
+// var ENTER_KEYCODE = 13;
 
 // переменные
 var templatePicture = document.querySelector('#picture');
@@ -145,7 +147,7 @@ pictureList.appendChild(renderPictureList(completedPhotoList));
 
 // Дополнительное задание
 // Показываем большое фото
-bigPicture.classList.remove('hidden');
+// bigPicture.classList.remove('hidden');
 
 // Показ случайного большого фото
 var generateBigImg = function () {
@@ -203,3 +205,82 @@ bigPictureShow();
 socialCommentCount.classList.add('visually-hidden');
 commentsLoader.classList.add('visually-hidden');
 
+// 4. Обработка событий
+// Личный проект: подробности
+
+var uploadFile = document.querySelector('#upload-file');
+var imgUploadOverlay = document.querySelector('.img-upload__overlay'); // форма редактирования изображения
+var uploadCancel = imgUploadOverlay.querySelector('#upload-cancel');
+// var sliderPin = document.querySelector('.effect-level__pin');
+// var sliderLine = document.querySelector('.effect-level__line');
+// var sliderEffectDepth = document.querySelector('.effect-level__depth');
+// var filterSaturationLevel = 100;
+
+// var imgPreview = document.querySelector('.img-upload__preview img'); // редактируемая картинка
+
+// открытие и закрытие окна редактирования фото
+uploadFile.addEventListener('change', function () {
+  imgUploadOverlay.classList.remove('hidden');
+});
+
+uploadCancel.addEventListener('click', function () {
+  imgUploadOverlay.classList.add('hidden');
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    imgUploadOverlay.classList.add('hidden');
+  }
+});
+
+// масштабирование
+var scaleControlSmaller = document.querySelector('.scale__control--smaller');
+var scaleControlBigger = document.querySelector('.scale__control--bigger');
+var scaleControlValue = document.querySelector('.scale__control--value'); // инпут
+var imgUploadPreview = document.querySelector('.img-upload__preview'); // предварительный просмотр изображения
+var stepResize = 25;
+var minSize = 25;
+var maxSize = 100;
+var defoltSize = 100;
+var scaleControlValueNumber = defoltSize; // значение масштаба в текущий момент
+
+// уменьшение масштаба изображения
+var controlSmallerHandler = function () {
+  if (scaleControlValueNumber <= maxSize && scaleControlValueNumber > minSize) {
+    scaleControlValueNumber -= stepResize;
+    scaleControlValue.value = scaleControlValueNumber + '%';
+  }
+};
+
+// увеличение масштаба изображения
+var controlBiggerHandler = function () {
+  if (scaleControlValueNumber >= minSize && scaleControlValueNumber < maxSize) {
+    scaleControlValueNumber += stepResize;
+    scaleControlValue.value = scaleControlValueNumber + '%';
+  }
+};
+
+// показ измененного масштаба изображения
+var resize = function () {
+  if (scaleControlValueNumber === 25) {
+    imgUploadPreview.classList.remove('scale-50');
+    imgUploadPreview.classList.add('scale-25');
+  } else if (scaleControlValueNumber === 50) {
+    imgUploadPreview.classList.remove('scale-25');
+    imgUploadPreview.classList.remove('scale-75');
+    imgUploadPreview.classList.add('scale-50');
+  } else if (scaleControlValueNumber === 75) {
+    imgUploadPreview.classList.remove('scale-50');
+    imgUploadPreview.classList.remove('scale-100');
+    imgUploadPreview.classList.add('scale-75');
+  } else if (scaleControlValueNumber === 100) {
+    imgUploadPreview.classList.remove('scale-75');
+    imgUploadPreview.classList.add('scale-100');
+  }
+};
+
+scaleControlSmaller.addEventListener('click', controlSmallerHandler);
+scaleControlBigger.addEventListener('click', controlBiggerHandler);
+
+scaleControlSmaller.addEventListener('click', resize);
+scaleControlBigger.addEventListener('click', resize);
