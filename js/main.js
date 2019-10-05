@@ -222,8 +222,9 @@ uploadCancel.addEventListener('click', function () {
   imgUploadOverlay.classList.add('hidden');
 });
 
+// если фокус находится в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения.
 document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (evt.keyCode === ESC_KEYCODE && evt.target !== textHashtagsInput) {
     imgUploadOverlay.classList.add('hidden');
   }
 });
@@ -238,6 +239,13 @@ var minSize = 25;
 var maxSize = 100;
 var defoltSize = 100;
 var scaleControlValueNumber = defoltSize; // значение масштаба в текущий момент
+
+// показатель масштаба при открытии фотографии
+var scaleIndicatorDefault = function () {
+  scaleControlValue.value = defoltSize + '%';
+};
+scaleIndicatorDefault();
+
 
 // уменьшение масштаба изображения
 var controlSmallerHandler = function () {
@@ -311,11 +319,41 @@ var toggleFilter = function () {
   }
 };
 
-toggleFilter();
-
 // удаление добавленных классов
 var filterRemove = function () {
   uploadPhoto.classList.remove('effects__preview--none', 'effects__preview--chrome', 'effects__preview--sepia', 'effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat');
   effectLevelSlider.classList.remove('hidden');
 };
 
+toggleFilter();
+
+
+// валидация хэш-тегов
+var textHashtagsInput = document.querySelector('.text__hashtags');
+var maxHashtags = 5;
+var maxLengthHashtag = 20;
+
+var arrHashtags = textHashtagsInput.value.split(' ', maxHashtags);
+
+textHashtagsInput.addEventListener('invalid', function () {
+  for (var i = 0; i < arrHashtags.length; i++) {
+    if (arrHashtags[i][0] !== '#') {
+      textHashtagsInput.setCustomValidity('Хэш-тег должен начинаться с символа # (решётка)');
+    }
+    if (arrHashtags[i][0] === '#' && arrHashtags[i].length === 1) {
+      textHashtagsInput.setCustomValidity('Хештег не может состоять только из одной решётки');
+    } else {
+      textHashtagsInput.setCustomValidity('');
+    }
+  }
+
+  if (arrHashtags.length > maxHashtags) {
+    textHashtagsInput.setCustomValidity('Количество хэштегов не должно превышать ' + maxHashtags);
+  }
+
+  if (arrHashtags[i].length > maxLengthHashtag) {
+    textHashtagsInput.setCustomValidity('Хэштег не должен превышать ' + maxLengthHashtag + ' символов');
+  } else {
+    textHashtagsInput.setCustomValidity('');
+  }
+});
