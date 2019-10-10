@@ -410,26 +410,26 @@ var changeIntensityFilters = function () {
   var sliderLineWidth = sliderLine.offsetWidth;
 
   // находим коэффициент изменения интенсивности
-  var coefficientFilter = getProportion(sliderPinPosition, sliderLineWidth);
+  var rateIntensityFilter = getProportion(sliderPinPosition, sliderLineWidth);
 
   if (imgUploadPreview.classList.contains('effects__preview--chrome')) {
-    effectLevelValue.value = coefficientFilter * FILTER_DEFAULT.chrome;
+    effectLevelValue.value = rateIntensityFilter * FILTER_DEFAULT.chrome;
     imgUploadPreview.style.filter = 'grayscale(' + effectLevelValue.value + ')';
   }
   if (imgUploadPreview.classList.contains('effects__preview--sepia')) {
-    effectLevelValue.value = coefficientFilter * FILTER_DEFAULT.sepia;
+    effectLevelValue.value = rateIntensityFilter * FILTER_DEFAULT.sepia;
     imgUploadPreview.style.filter = 'sepia(' + effectLevelValue.value + ')';
   }
   if (imgUploadPreview.classList.contains('effects__preview--marvin')) {
-    effectLevelValue.value = coefficientFilter * FILTER_DEFAULT.marvin;
+    effectLevelValue.value = rateIntensityFilter * FILTER_DEFAULT.marvin;
     imgUploadPreview.style.filter = 'invert(' + effectLevelValue.value + '%)';
   }
   if (imgUploadPreview.classList.contains('effects__preview--phobos')) {
-    effectLevelValue.value = coefficientFilter * FILTER_DEFAULT.phobos;
+    effectLevelValue.value = rateIntensityFilter * FILTER_DEFAULT.phobos;
     imgUploadPreview.style.filter = 'blur(' + effectLevelValue.value + 'px)';
   }
   if (imgUploadPreview.classList.contains('effects__preview--heat')) {
-    effectLevelValue.value = coefficientFilter * FILTER_DEFAULT.heat;
+    effectLevelValue.value = rateIntensityFilter * FILTER_DEFAULT.heat;
     imgUploadPreview.style.filter = 'brightness(' + effectLevelValue.value + ')';
   }
 };
@@ -451,7 +451,6 @@ var toggleFilter = function (arr) {
       sliderPin.addEventListener('mouseup', function () {
         changeIntensityFilters();
       });
-
     });
   }
 };
