@@ -224,12 +224,15 @@ uploadFile.addEventListener('change', function () {
 
 uploadCancel.addEventListener('click', function () {
   imgUploadOverlay.classList.add('hidden');
+  defaultSettings();
 });
 
-// если фокус находится в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения.
+// закрытие по клавише ESC
+// если фокус находится в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения
 document.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ESC_KEYCODE && evt.target !== textHashtagsInput) {
     imgUploadOverlay.classList.add('hidden');
+    defaultSettings();
   }
 });
 
@@ -303,6 +306,13 @@ var FILTER_DEFAULT = {
   marvin: 100,
   phobos: 3,
   heat: 3
+};
+
+// функция сброса всех значений
+var defaultSettings = function () {
+  imgUploadPreview.classList.add('scale-' + defoltSize);
+  resetEffect();
+  scaleIndicatorDefault();
 };
 
 
@@ -424,7 +434,6 @@ var changeIntensityFilters = function () {
   }
 };
 
-
 // функция добавления фильтров на фото
 var toggleFilter = function (arr) {
   for (var i = 0; i < arr.length; i++) {
@@ -454,6 +463,7 @@ toggleFilter(effectsLabels);
 var textHashtagsInput = document.querySelector('.text__hashtags');
 var MAX_HASHTEGS = 5;
 var MAX_HASHTEGS_LENGTH = 20;
+
 
 // функция проверки хэштегов
 var hashtagsValidation = function (target, value) {
