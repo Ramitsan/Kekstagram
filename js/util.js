@@ -11,7 +11,7 @@
     return Math.floor(Math.random() * (max - min)) + min;
   };
 
-    window.util = {
+  window.util = {
     ESC_KEYCODE: ESC_KEYCODE,
     ENTER_KEYCODE: ENTER_KEYCODE,
     getRandomIndex: getRandomIndex
