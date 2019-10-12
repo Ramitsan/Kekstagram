@@ -212,7 +212,7 @@ var uploadFile = document.querySelector('#upload-file');
 var imgUploadOverlay = document.querySelector('.img-upload__overlay'); // форма редактирования изображения
 var uploadCancel = document.querySelector('#upload-cancel');
 var uploadSubmit = document.querySelector('#upload-submit');
-// var formUpload = document.querySelector('.img-upload__form');
+var formUpload = document.querySelector('.img-upload__form');
 var effectLevelSlider = document.querySelector('.effect-level');
 
 
@@ -220,11 +220,11 @@ var effectLevelSlider = document.querySelector('.effect-level');
 uploadFile.addEventListener('change', function () {
   imgUploadOverlay.classList.remove('hidden');
   effectLevelSlider.classList.add('hidden');
+  defaultSettings();
 });
 
 uploadCancel.addEventListener('click', function () {
   imgUploadOverlay.classList.add('hidden');
-  defaultSettings();
 });
 
 // закрытие по клавише ESC
@@ -232,7 +232,7 @@ uploadCancel.addEventListener('click', function () {
 document.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ESC_KEYCODE && evt.target !== textHashtagsInput) {
     imgUploadOverlay.classList.add('hidden');
-    defaultSettings();
+
   }
 });
 
@@ -458,6 +458,40 @@ var toggleFilter = function (arr) {
 toggleFilter(effectsLabels);
 
 
+  // перемещение ползунка слайдера
+  sliderPin.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+      x: evt.clientX
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX
+      };
+
+      startCoords = {
+        x: moveEvt.clientX
+      };
+
+      sliderPin.style.left = (sliderPin.offsetLeft - shift.x) + 'px';
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      formUpload.removeEventListener('mousemove', onMouseMove);
+      formUpload.removeEventListener('mouseup', onMouseUp);
+    };
+
+    formUpload.addEventListener('mousemove', onMouseMove);
+    formUpload.addEventListener('mouseup', onMouseUp);
+  });
+
+
 // валидация хэш-тегов
 var textHashtagsInput = document.querySelector('.text__hashtags');
 var MAX_HASHTEGS = 5;
@@ -489,6 +523,7 @@ var hashtagsValidation = function (target, value) {
     }
   }
 };
+
 
 textHashtagsInput.addEventListener('input', function (evt) {
   var hashtagValue = textHashtagsInput.value.toLowerCase();
