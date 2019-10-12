@@ -1,7 +1,7 @@
 'use strict';
 
 // КОНСТАНТЫ
-(function () {
+(function() {
 
   var DESCRIPTION_PHOTOS = ['Снято на Кэнон', 'Снято на Никон', 'Снято на Хассель', 'Снято на Роллейфлекс', 'Снято на Зенит', 'Снято на Айфон', 'Снято на Полароид'];
   var COMMENTS_PHOTOS = [
@@ -23,8 +23,6 @@
   var MIN_LIKES = 15;
   var MAX_LIKES = 200;
 
-  // переменные
-  var maxBigPicture = 4;
 
   window.data = {
     DESCRIPTION_PHOTOS: DESCRIPTION_PHOTOS,
@@ -33,8 +31,7 @@
     PHOTOS_AMOUNT: PHOTOS_AMOUNT,
     AVATAR_AMOUNT: AVATAR_AMOUNT,
     MIN_LIKES: MIN_LIKES,
-    MAX_LIKES: MAX_LIKES,
-    maxBigPicture: maxBigPicture
+    MAX_LIKES: MAX_LIKES
   };
 
 })();
