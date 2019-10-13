@@ -7,14 +7,13 @@
   var ENTER_KEYCODE = 13;
 
   // генерация случайного числа в заданном интервале, включительно
-  var getRandomIndex = function (min, max) {
+  window.getRandomIndex = function (min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   };
 
   window.util = {
     ESC_KEYCODE: ESC_KEYCODE,
-    ENTER_KEYCODE: ENTER_KEYCODE,
-    getRandomIndex: getRandomIndex
+    ENTER_KEYCODE: ENTER_KEYCODE
   };
 
 })();

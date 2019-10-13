@@ -8,7 +8,23 @@
   var uploadSubmit = document.querySelector('#upload-submit');
   var formUpload = document.querySelector('.img-upload__form');
   var effectLevelSlider = document.querySelector('.effect-level');
+  var imgUploadPreview = document.querySelector('.img-upload__preview'); // предварительный просмотр изображения
+  var uploadPhoto = document.querySelector('.img-upload__preview img');
+  var effectsLabels = document.querySelectorAll('.effects__label');
+  var effectLevelValue = document.querySelector('.effect-level__value');
 
+  window.form = {
+    uploadFile: uploadFile,
+    imgUploadOverlay: imgUploadOverlay,
+    uploadCancel: uploadCancel,
+    uploadSubmit: uploadSubmit,
+    formUpload: formUpload,
+    effectLevelSlider: effectLevelSlider,
+    imgUploadPreview: imgUploadPreview,
+    uploadPhoto: uploadPhoto,
+    effectsLabels: effectsLabels,
+    effectLevelValue: effectLevelValue
+  };
 
   // открытие и закрытие окна редактирования фото
   uploadFile.addEventListener('change', function () {
@@ -22,9 +38,9 @@
   });
 
   // закрытие по клавише ESC
-  // если фокус находится в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы редактирования изображения
+  // если фокус в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.util.ESC_KEYCODE && evt.target !== textHashtagsInput) {
+    if (evt.keyCode === window.util.ESC_KEYCODE && evt.target !== window.hashtags.textHashtagsInput) {
       imgUploadOverlay.classList.add('hidden');
     }
   });
@@ -36,63 +52,7 @@
     }
   });
 
-  // масштабирование
-  var scaleControlSmaller = document.querySelector('.scale__control--smaller');
-  var scaleControlBigger = document.querySelector('.scale__control--bigger');
-  var scaleControlValue = document.querySelector('.scale__control--value'); // инпут
-  var imgUploadPreview = document.querySelector('.img-upload__preview'); // предварительный просмотр изображения
-  var stepResize = 25;
-  var minSize = 25;
-  var maxSize = 100;
-  var defoltSize = 100;
-  var scaleControlValueNumber = defoltSize; // значение масштаба в текущий момент
-
-  // показатель масштаба при открытии фотографии
-  var scaleIndicatorDefault = function () {
-    scaleControlValue.value = defoltSize + '%';
-  };
-  scaleIndicatorDefault();
-
-
-  // уменьшение масштаба изображения
-  var controlSmallerHandler = function () {
-    if (scaleControlValueNumber <= maxSize && scaleControlValueNumber > minSize) {
-      scaleControlValueNumber -= stepResize;
-      scaleControlValue.value = scaleControlValueNumber + '%';
-    }
-  };
-
-  // увеличение масштаба изображения
-  var controlBiggerHandler = function () {
-    if (scaleControlValueNumber >= minSize && scaleControlValueNumber < maxSize) {
-      scaleControlValueNumber += stepResize;
-      scaleControlValue.value = scaleControlValueNumber + '%';
-    }
-  };
-
-  // показ измененного масштаба изображения
-  var resize = function () {
-    imgUploadPreview.classList.remove('scale-25', 'scale-50', 'scale-75', 'scale-100');
-    imgUploadPreview.classList.add('scale-' + scaleControlValueNumber);
-  };
-
-  var photoSmaller = function () {
-    controlSmallerHandler();
-    resize();
-  };
-
-  var photoBigger = function () {
-    controlBiggerHandler();
-    resize();
-  };
-
-  scaleControlSmaller.addEventListener('click', photoSmaller);
-  scaleControlBigger.addEventListener('click', photoBigger);
-
   // применение фильтров
-  var uploadPhoto = document.querySelector('.img-upload__preview img');
-  var effectsLabels = document.querySelectorAll('.effects__label');
-
   var FILTER_DEFAULT = {
     chrome: 1,
     sepia: 1,
@@ -103,9 +63,9 @@
 
   // функция сброса всех значений
   var defaultSettings = function () {
-    imgUploadPreview.classList.add('scale-' + defoltSize);
+    imgUploadPreview.classList.add('scale-' + window.zoom.defoltSize);
     resetEffect();
-    scaleIndicatorDefault();
+    window.scaleIndicatorDefault();
   };
 
 
@@ -156,7 +116,7 @@
 
       arr[i].addEventListener('click', function (evt) {
         resetEffect();
-        getDefaultSlider();
+        window.getDefaultSlider();
         sliderHidden(evt);
 
         // добавление класса фильтра
@@ -164,7 +124,7 @@
         getDefaultFilterMax();
 
         // меняем интенсивность фильтра
-        sliderPin.addEventListener('mouseup', function () {
+        window.slider.sliderPin.addEventListener('mouseup', function () {
           changeIntensityFilters();
         });
       });
@@ -172,25 +132,6 @@
   };
 
   toggleFilter(effectsLabels);
-
-  // перемещение ползунка слайдера
-  var effectLevelValue = document.querySelector('.effect-level__value');
-  var sliderPin = document.querySelector('.effect-level__pin');
-  var sliderLine = document.querySelector('.effect-level__line');
-  var sliderEffectDepth = document.querySelector('.effect-level__depth');
-  var EFFECT_MAX_VALUE = 100;
-
-  // var filterSaturationLevelDefault = 100;
-  // var sliderWidth = 495;
-  // var sliderPadding = 20;
-
-
-  // установка значения слайдера по дефолту
-  var getDefaultSlider = function () {
-    sliderPin.style.left = EFFECT_MAX_VALUE + '%';
-    sliderEffectDepth.style.width = EFFECT_MAX_VALUE + '%';
-    effectLevelValue.value = EFFECT_MAX_VALUE;
-  };
 
 
   // максимальные значения фильтров по дефолту
@@ -221,9 +162,9 @@
   // функция установки интенсивности фильтров
   var changeIntensityFilters = function () {
 
-    var sliderPinRadius = sliderPin.offsetWidth / 2;
-    var sliderPinPosition = sliderPin.offsetLeft - sliderPinRadius;
-    var sliderLineWidth = sliderLine.offsetWidth;
+    var sliderPinRadius = window.slider.sliderPin.offsetWidth / 2;
+    var sliderPinPosition = window.slider.sliderPin.offsetLeft - sliderPinRadius;
+    var sliderLineWidth = window.slider.sliderLine.offsetWidth;
 
     // находим коэффициент изменения интенсивности
     var rateIntensityFilter = getProportion(sliderPinPosition, sliderLineWidth);
@@ -249,78 +190,5 @@
       imgUploadPreview.style.filter = 'brightness(' + effectLevelValue.value + ')';
     }
   };
-
-  // перемещение ползунка слайдера
-  sliderPin.addEventListener('mousedown', function (evt) {
-    evt.preventDefault();
-
-    var startCoords = {
-      x: evt.clientX
-    };
-
-    var onMouseMove = function (moveEvt) {
-      moveEvt.preventDefault();
-
-      var shift = {
-        x: startCoords.x - moveEvt.clientX
-      };
-
-      startCoords = {
-        x: moveEvt.clientX
-      };
-
-      sliderPin.style.left = (sliderPin.offsetLeft - shift.x) + 'px';
-    };
-
-    var onMouseUp = function (upEvt) {
-      upEvt.preventDefault();
-
-      formUpload.removeEventListener('mousemove', onMouseMove);
-      formUpload.removeEventListener('mouseup', onMouseUp);
-    };
-
-    formUpload.addEventListener('mousemove', onMouseMove);
-    formUpload.addEventListener('mouseup', onMouseUp);
-  });
-
-  // валидация хэш-тегов
-  var textHashtagsInput = document.querySelector('.text__hashtags');
-  var MAX_HASHTEGS = 5;
-  var MAX_HASHTEGS_LENGTH = 20;
-
-
-  // функция проверки хэштегов
-  var hashtagsValidation = function (target, value) {
-    var arrHashtags = value.split(' ', MAX_HASHTEGS);
-
-    for (var i = 0; i < arrHashtags.length; i++) {
-      var hashtag = arrHashtags[i];
-
-      switch (true) {
-        case hashtag[0] !== '#':
-          target.setCustomValidity('Хэш-тег должен начинаться с символа # (решётка)');
-          break;
-        case hashtag === '#' && hashtag.length === 1:
-          target.setCustomValidity('Хештег не может состоять только из одной решётки');
-          break;
-        case arrHashtags.length > MAX_HASHTEGS:
-          target.setCustomValidity('Количество хэштегов не должно превышать ' + MAX_HASHTEGS);
-          break;
-        case hashtag.length > MAX_HASHTEGS_LENGTH:
-          target.setCustomValidity('Хэштег не должен превышать ' + MAX_HASHTEGS_LENGTH + ' символов');
-          break;
-        default:
-          target.setCustomValidity('');
-      }
-    }
-  };
-
-  textHashtagsInput.addEventListener('input', function (evt) {
-    var hashtagValue = textHashtagsInput.value.toLowerCase();
-    var target = evt.target;
-
-    hashtagsValidation(target, hashtagValue);
-  });
-
 
 })();
