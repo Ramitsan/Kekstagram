@@ -58,7 +58,7 @@
       upEvt.preventDefault();
 
       window.form.formUpload.removeEventListener('mousemove', onMouseMove);
-      window.form.formUpload.removeEventListener('mouseup', onMouseUp);
+      // window.form.formUpload.removeEventListener('mouseup', onMouseUp);
     };
 
     window.form.formUpload.addEventListener('mousemove', onMouseMove);
