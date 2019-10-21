@@ -98,7 +98,7 @@
 
     pictureElementImg.src = pictureItem.url;
     pictureElement.querySelector('.picture__likes').textContent = pictureItem.likes;
-    pictureElement.querySelector('.picture__comments').textContent = pictureItem.comments;
+    pictureElement.querySelector('.picture__comments').textContent = pictureItem.comments.length;
 
     return pictureElement;
   };
@@ -132,13 +132,16 @@
 
 
   // обработчик ошибки
-  var errorHandler = function () {
-
+  var errorHandler = function (errorMessage) {
     var error = document.querySelector('#error').content.querySelector('.error');
+    error.querySelector('.error__title').textContent = errorMessage;
+    error.querySelector('.error__title').style.lineHeight = '50px';
+
+
     document.querySelector('main').append(error);
     return error;
   };
 
-  window.load(successHandler, errorHandler);
+  window.backend.load(successHandler, errorHandler);
 
 })();

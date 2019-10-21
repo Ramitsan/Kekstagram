@@ -10,7 +10,7 @@
   var REQUEST_STATUS_SERVER_ERROR = 500;
 
 
-  window.serverRequest = function (URL, method, data, onLoad, onError) {
+  var serverRequest = function (URL, method, data, onLoad, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.timeout = REQUEST_TIMEOUT;
@@ -46,12 +46,17 @@
     xhr.send(data);
   };
 
-  window.save = function (data, onLoad, onError) {
-    window.serverRequest(URL_SAVE, 'POST', data, onLoad, onError);
+  var save = function (data, onLoad, onError) {
+    serverRequest(URL_SAVE, 'POST', data, onLoad, onError);
   };
 
-  window.load = function (onLoad, onError) {
-    window.serverRequest(URL_LOAD, 'GET', null, onLoad, onError);
+  var load = function (onLoad, onError) {
+    serverRequest(URL_LOAD, 'GET', null, onLoad, onError);
+  };
+
+  window.backend = {
+    save: save,
+    load: load
   };
 
 })();
