@@ -2,7 +2,7 @@
 
 (function () {
   var URL_SAVE = 'https://js.dump.academy/kekstagram';
-  var URL_LOAD = 'https://js.dump.academy/kekstagram/data33';
+  var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
   var REQUEST_TIMEOUT = 10000; // 10s
   var REQUEST_STATUS_OK = 200;
   var REQUEST_STATUS_BAD = 400;
