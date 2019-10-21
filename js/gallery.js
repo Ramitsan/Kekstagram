@@ -27,11 +27,11 @@
     return arr[randomName];
   };
 
-  // генерируем случайное описание фото
-  var getRandomDescription = function (arr) {
-    var randomDescription = window.getRandomIndex(0, arr.length);
-    return arr[randomDescription];
-  };
+  // // генерируем случайное описание фото
+  // var getRandomDescription = function (arr) {
+  //   var randomDescription = window.getRandomIndex(0, arr.length);
+  //   return arr[randomDescription];
+  // };
 
   // функция генерации одного комментария
   var createPhotoComment = function (_avatar, _message, _name) {
@@ -59,37 +59,37 @@
 
   window.arrComments = createPhotoComments(window.data.PHOTOS_AMOUNT);
 
-  // функция генерации случайного комментария из массива комментариев
-  var getRandomComment = function (arr) {
-    var randomComment = window.getRandomIndex(0, arr.length);
-    return arr[randomComment];
-  };
+  // // функция генерации случайного комментария из массива комментариев
+  // var getRandomComment = function (arr) {
+  //   var randomComment = window.getRandomIndex(0, arr.length);
+  //   return arr[randomComment];
+  // };
 
 
-  // функция создания одного объекта с фото
-  var createPhotoObject = function (_url, _description, _likes, _comments) {
-    var photo = {
-      url: _url,
-      description: _description,
-      likes: _likes,
-      comment: _comments
-    };
-    return photo;
-  };
+  // // функция создания одного объекта с фото
+  // var createPhotoObject = function (_url, _description, _likes, _comments) {
+  //   var photo = {
+  //     url: _url,
+  //     description: _description,
+  //     likes: _likes,
+  //     comment: _comments
+  //   };
+  //   return photo;
+  // };
 
   // функция создания массива объектов с фото
-  var createPhotoObjects = function (length) {
-    var photos = [];
-    for (var i = 0; i < length; i++) {
-      var photoUrl = 'photos/' + (i + 1) + '.jpg';
-      var description = getRandomDescription(window.data.DESCRIPTION_PHOTOS);
-      var likes = window.getRandomIndex(window.data.MIN_LIKES, window.data.MAX_LIKES);
-      var comment = getRandomComment(window.arrComments);
+  // var createPhotoObjects = function (length) {
+  //   var photos = [];
+  //   for (var i = 0; i < length; i++) {
+  //     var photoUrl = 'photos/' + (i + 1) + '.jpg';
+  //     var description = getRandomDescription(window.data.DESCRIPTION_PHOTOS);
+  //     var likes = window.getRandomIndex(window.data.MIN_LIKES, window.data.MAX_LIKES);
+  //     var comment = getRandomComment(window.arrComments);
 
-      photos[i] = createPhotoObject(photoUrl, description, likes, comment);
-    }
-    return photos;
-  };
+  //     photos[i] = createPhotoObject(photoUrl, description, likes, comment);
+  //   }
+  //   return photos;
+  // };
 
   // Рендер DOM-элемента на основе объекта
   var renderPicture = function (pictureItem) {
@@ -103,19 +103,41 @@
     return pictureElement;
   };
 
-  // Заполнение DOM-элемента на основе массива
-  var renderPictureList = function (arrPhotos) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < arrPhotos.length; i++) {
-      fragment.appendChild(renderPicture(arrPhotos[i]));
-    }
-    return fragment;
-  };
+  // // Заполнение DOM-элемента на основе массива
+  // var renderPictureList = function (arrPhotos) {
+  //   var fragment = document.createDocumentFragment();
+  //   for (var i = 0; i < arrPhotos.length; i++) {
+  //     fragment.appendChild(renderPicture(arrPhotos[i]));
+  //   }
+  //   return fragment;
+  // };
 
   // Получаем массив с фотографиями и коментариями
-  var completedPhotoList = createPhotoObjects(window.data.PHOTOS_AMOUNT);
+  // var completedPhotoList = createPhotoObjects(window.data.PHOTOS_AMOUNT);
 
-  // Отрисовка сгенерированных DOM-элементов
-  pictureList.appendChild(renderPictureList(completedPhotoList));
+  // // Отрисовка сгенерированных DOM-элементов
+  // pictureList.appendChild(renderPictureList(completedPhotoList));
 
+
+  // обработчик успешной загрузки
+  var successHandler = function (arrPhotos) {
+    var fragment = document.createDocumentFragment();
+
+    for (var i = 0; i < window.data.PHOTOS_AMOUNT; i++) {
+      fragment.appendChild(renderPicture(arrPhotos[i]));
+    }
+
+    pictureList.appendChild(fragment);
+  };
+
+
+  // обработчик ошибки
+  var errorHandler = function () {
+
+    var error = document.querySelector('#error').content.querySelector('.error');
+    document.querySelector('main').append(error);
+    return error;
+  };
+
+  window.load(successHandler, errorHandler);
 })();
