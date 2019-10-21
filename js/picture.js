@@ -27,7 +27,7 @@
     commentsLoader: commentsLoader
   };
 
-  // Показываем большое фото
+  // // Показываем большое фото
   // bigPicture.classList.remove('hidden');
 
   // // закрываем большое фото

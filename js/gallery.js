@@ -130,25 +130,13 @@
     pictureList.appendChild(fragment);
   };
 
-  // обработчик ошибки, DOM элемент
-  var errorHandler = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style.position = 'absolute';
-    node.style.zIndex = '100';
-    node.style.width = '400px';
-    node.style.top = '25%';
-    node.style.left = '35%';
-    node.style.paddingTop = '50px';
-    node.style.paddingBottom = '100px';
-    node.style.backgroundColor = 'red';
-    node.style.color = 'yellow';
-    node.style.fontSize = '30px';
-    node.style.fontWeight = 'bold';
-    node.style.lineHeight = '65px';
-    node.style.textAlign = 'center';
-    node.textContent = errorMessage;
 
-    document.body.insertAdjacentElement('afterbegin', node);
+  // обработчик ошибки
+  var errorHandler = function () {
+
+    var error = document.querySelector('#error').content.querySelector('.error');
+    document.querySelector('main').append(error);
+    return error;
   };
 
   window.load(successHandler, errorHandler);
