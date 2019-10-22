@@ -12,6 +12,7 @@
   var uploadPhoto = document.querySelector('.img-upload__preview img');
   var effectsLabels = document.querySelectorAll('.effects__label');
   var effectLevelValue = document.querySelector('.effect-level__value');
+  var commentInput = document.querySelector('.text__description');
 
   var FILTER_DEFAULT = {
     chrome: 1,
@@ -20,6 +21,8 @@
     phobos: 3,
     heat: 3
   };
+
+  var FILTERS = ['none', 'chrome', 'sepia', 'marvin', 'phobos', 'heat'];
 
   window.form = {
     uploadFile: uploadFile,
@@ -32,8 +35,11 @@
     uploadPhoto: uploadPhoto,
     effectsLabels: effectsLabels,
     effectLevelValue: effectLevelValue,
-    FILTER_DEFAULT: FILTER_DEFAULT
+    commentInput: commentInput,
+    FILTER_DEFAULT: FILTER_DEFAULT,
+    FILTERS: FILTERS
   };
+
 
   // открытие и закрытие окна редактирования фото
   uploadFile.addEventListener('change', function () {
@@ -46,17 +52,32 @@
     imgUploadOverlay.classList.add('hidden');
   });
 
+
   // закрытие по клавише ESC
-  // если фокус в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы
+  // не работает с window.pressEsc!!!
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.util.ESC_KEYCODE && evt.target !== window.hashtags.textHashtagsInput) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
       imgUploadOverlay.classList.add('hidden');
+    }
+  });
+
+  // если фокус в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы
+  window.hashtags.textHashtagsInput.addEventListener('keydown', function (evt) {
+    if (window.pressEsc) {
+      evt.stopPropagation();
+    }
+  });
+
+  // если фокус в поле ввода комментария, нажатие на Esc не должно приводить к закрытию формы
+  commentInput.addEventListener('keydown', function (evt) {
+    if (window.pressEsc) {
+      evt.stopPropagation();
     }
   });
 
   // Отправить форму при нажатии на enter
   uploadSubmit.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+    if (window.pressEnter) {
       imgUploadOverlay.submit();
     }
   });
@@ -65,14 +86,17 @@
   // функция сброса всех значений
   var defaultSettings = function () {
     imgUploadPreview.classList.add('scale-' + window.zoom.defoltSize);
-    resetEffect();
+    resetEffect(window.form.FILTERS);
     window.scaleIndicatorDefault();
+    window.hashtags.textHashtagsInput.value = '';
+    commentInput.value = '';
   };
 
 
   // добавляем класс для фото соответственно выбранному фильтру
   var getClassName = function (evt) {
     var filterName = evt.target.parentNode.htmlFor;
+    resetEffect(FILTERS);
 
     if (filterName === 'effect-none') {
       uploadPhoto.classList.add('effects__preview--none');
@@ -104,10 +128,12 @@
     }
   };
 
-  // Функция удаления добавленных классов
-  var resetEffect = function () {
-    uploadPhoto.classList.remove('effects__preview--none', 'effects__preview--chrome', 'effects__preview--sepia', 'effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat');
-  };
+
+  var resetEffect = function (FILTERS) {
+    for (var i = 0; i < window.form.FILTERS.length; i++) {
+      uploadPhoto.classList.remove('effects__preview--' + window.form.FILTERS[i]);
+    };
+  }
 
 
   // максимальные значения фильтров по дефолту
@@ -181,7 +207,7 @@
   var toggleFilter = function (arr) {
     for (var i = 0; i < arr.length; i++) {
 
-      arr[i].addEventListener('click', function (evt) {
+      arr[i].addEventListener('click', function(evt) {
         resetEffect();
         resetIntensityFilters();
         window.getDefaultSlider();
@@ -192,7 +218,7 @@
         getDefaultFilterMax();
 
         // меняем интенсивность фильтра
-        window.slider.sliderPin.addEventListener('mouseup', function () {
+        window.slider.sliderPin.addEventListener('mouseup', function() {
           changeIntensityFilters();
         });
       });
@@ -203,83 +229,70 @@
 
 
 
-// отправка данных на сервер
-var success = document.querySelector('#success').content.querySelector('.success');
-var successButton = success.querySelector('.success__button');
-var error = document.querySelector('#error').content.querySelector('.error');
-var errorButton = error.querySelector('.error__button');
-var buttonSubmit = document.querySelector('.img-upload__submit');
-
-
-// обработчик успешной загрузки
-var successSaveHandler = function () {
-  success.style.zIndex = '100';
-  document.querySelector('main').append(success);
-  return success;
-};
-
-
-// закрытие окна успешной загрузки
-successButton.addEventListener('click', function(evt) {
-  success.remove();
-});
-
-document.addEventListener('keydown', function(evt) {
-  if (evt.keyCode === window.util.ESC_KEYCODE) {
-    success.remove();
-  }
-});
-
-success.addEventListener('click', function () {
-  success.remove();
-});
-
-
-
-// обработчик ошибки
-var errorSaveHandler = function (errorMessage) {
+  // отправка данных на сервер
+  var success = document.querySelector('#success').content.querySelector('.success');
+  var successButton = success.querySelector('.success__button');
   var error = document.querySelector('#error').content.querySelector('.error');
-  error.querySelector('.error__title').textContent = errorMessage;
-  error.querySelector('.error__title').style.lineHeight = '50px';
-
-  document.querySelector('main').append(error);
-  return error;
-};
+  var errorButton = error.querySelector('.error__button');
+  var buttonSubmit = document.querySelector('.img-upload__submit');
 
 
-// закрытие окна об ошибке
-errorButton.addEventListener('click', function () {
-  error.remove();
-});
+  // обработчик успешной загрузки
+  var successSaveHandler = function () {
+    success.style.zIndex = '100';
+    document.querySelector('main').append(success);
+    return success;
+  };
 
-document.addEventListener('keydown', function (evt) {
-  if (evt.keyCode === window.util.ESC_KEYCODE) {
+
+  // закрытие окна успешной загрузки
+  successButton.addEventListener('click', function (evt) {
+    success.remove();
+  });
+
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
+      success.remove();
+    }
+  });
+
+  success.addEventListener('click', function () {
+    success.remove();
+  });
+
+
+
+  // обработчик ошибки
+  var errorSaveHandler = function (errorMessage) {
+    var error = document.querySelector('#error').content.querySelector('.error');
+    error.querySelector('.error__title').textContent = errorMessage;
+    error.querySelector('.error__title').style.lineHeight = '50px';
+
+    document.querySelector('main').append(error);
+    return error;
+  };
+
+
+  // закрытие окна об ошибке
+  errorButton.addEventListener('click', function () {
     error.remove();
-  }
-});
+  });
 
-error.addEventListener('click', function () {
-  error.remove();
-});
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
+      error.remove();
+    }
+  });
 
-var closeImgUploadOverlay = function () {
-  imgUploadOverlay.classList.add('hidden');
-}
+  error.addEventListener('click', function () {
+    error.remove();
+  });
 
+  document.addEventListener('submit', function (evt) {
+    imgUploadOverlay.classList.add('hidden');
+    evt.preventDefault();
+    window.backend.save(new FormData(formUpload), successSaveHandler, errorSaveHandler);
 
-buttonSubmit.addEventListener('submit', function (response) {
-  evt.preventDefault();
-  window.backend.save(new FormData(formUpload), successSaveHandler, errorSaveHandler);
-  imgUploadOverlay.classList.add('hidden');
-
-});
-
-
-// formUpload.addEventListener('submit', function (evt) {
-//   window.backend.save(new FormData(formUpload), function (response) {
-//     formUpload.classList.add('hidden');
-//   })
-//   evt.preventDefault();
-// });
+  });
 
 })();
