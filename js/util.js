@@ -11,6 +11,7 @@
     return Math.floor(Math.random() * (max - min)) + min;
   };
 
+
   window.util = {
     ESC_KEYCODE: ESC_KEYCODE,
     ENTER_KEYCODE: ENTER_KEYCODE

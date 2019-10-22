@@ -120,7 +120,7 @@
 
 
   // обработчик успешной загрузки
-  var successHandler = function (arrPhotos) {
+  var successLoadHandler = function (arrPhotos) {
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < window.data.PHOTOS_AMOUNT; i++) {
@@ -132,7 +132,7 @@
 
 
   // обработчик ошибки
-  var errorHandler = function (errorMessage) {
+  var errorLoadHandler = function (errorMessage) {
     var error = document.querySelector('#error').content.querySelector('.error');
     error.querySelector('.error__title').textContent = errorMessage;
     error.querySelector('.error__title').style.lineHeight = '50px';
@@ -142,6 +142,6 @@
     return error;
   };
 
-  window.backend.load(successHandler, errorHandler);
+  window.backend.load(successLoadHandler, errorLoadHandler);
 
 })();

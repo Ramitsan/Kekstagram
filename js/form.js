@@ -201,4 +201,87 @@
 
   toggleFilter(effectsLabels);
 
+
+
+// отправка данных на сервер
+var success = document.querySelector('#success').content.querySelector('.success');
+var successButton = success.querySelector('.success__button');
+var error = document.querySelector('#error').content.querySelector('.error');
+var errorButton = error.querySelector('.error__button');
+var buttonSubmit = document.querySelector('.img-upload__submit');
+
+
+// обработчик успешной загрузки
+var successSaveHandler = function () {
+  success.style.zIndex = '100';
+  document.querySelector('main').append(success);
+  return success;
+};
+
+
+// закрытие окна успешной загрузки
+successButton.addEventListener('click', function(evt) {
+  success.remove();
+});
+
+document.addEventListener('keydown', function(evt) {
+  if (evt.keyCode === window.util.ESC_KEYCODE) {
+    success.remove();
+  }
+});
+
+success.addEventListener('click', function () {
+  success.remove();
+});
+
+
+
+// обработчик ошибки
+var errorSaveHandler = function (errorMessage) {
+  var error = document.querySelector('#error').content.querySelector('.error');
+  error.querySelector('.error__title').textContent = errorMessage;
+  error.querySelector('.error__title').style.lineHeight = '50px';
+
+  document.querySelector('main').append(error);
+  return error;
+};
+
+
+// закрытие окна об ошибке
+errorButton.addEventListener('click', function () {
+  error.remove();
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === window.util.ESC_KEYCODE) {
+    error.remove();
+  }
+});
+
+error.addEventListener('click', function () {
+  error.remove();
+});
+
+var closeImgUploadOverlay = function () {
+  imgUploadOverlay.classList.add('hidden');
+}
+
+
+buttonSubmit.addEventListener('click', function (evt) {
+  window.backend.save(new FormData(formUpload), function (response) {
+    imgUploadOverlay.classList.add('hidden');
+  });
+  evt.preventDefault();
+
+  window.backend.save(data, successSaveHandler, errorSaveHandler);
+});
+
+
+// formUpload.addEventListener('submit', function (evt) {
+//   window.backend.save(new FormData(formUpload), function (response) {
+//     formUpload.classList.add('hidden');
+//   })
+//   evt.preventDefault();
+// });
+
 })();
