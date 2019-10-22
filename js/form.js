@@ -267,13 +267,11 @@ var closeImgUploadOverlay = function () {
 }
 
 
-buttonSubmit.addEventListener('click', function (evt) {
-  window.backend.save(new FormData(formUpload), function (response) {
-    imgUploadOverlay.classList.add('hidden');
-  });
+buttonSubmit.addEventListener('submit', function (response) {
   evt.preventDefault();
+  window.backend.save(new FormData(formUpload), successSaveHandler, errorSaveHandler);
+  imgUploadOverlay.classList.add('hidden');
 
-  window.backend.save(data, successSaveHandler, errorSaveHandler);
 });
 
 
