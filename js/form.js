@@ -96,7 +96,6 @@
   // добавляем класс для фото соответственно выбранному фильтру
   var getClassName = function (evt) {
     var filterName = evt.target.parentNode.htmlFor;
-    resetEffect(FILTERS);
 
     if (filterName === 'effect-none') {
       uploadPhoto.classList.add('effects__preview--none');
@@ -208,7 +207,7 @@
     for (var i = 0; i < arr.length; i++) {
 
       arr[i].addEventListener('click', function(evt) {
-        resetEffect();
+        resetEffect(window.form.FILTERS);
         resetIntensityFilters();
         window.getDefaultSlider();
         sliderHidden(evt);
