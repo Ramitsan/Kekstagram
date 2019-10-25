@@ -95,31 +95,35 @@
 
   // добавляем класс для фото соответственно выбранному фильтру
   var getClassName = function (evt) {
-    var filterName = evt.target.parentNode.htmlFor;
+    var filterName = evt.target.parentElement.htmlFor;
 
-    if (filterName === 'effect-none') {
-      uploadPhoto.classList.add('effects__preview--none');
+    switch (filterName) {
+      case 'effect-none':
+        uploadPhoto.classList.add('effects__preview--none');
+        break;
+      case 'effect-chrome':
+        uploadPhoto.classList.add('effects__preview--chrome');
+        break;
+      case 'effect-sepia':
+        uploadPhoto.classList.add('effects__preview--sepia');
+        break;
+      case 'effect-marvin':
+        uploadPhoto.classList.add('effects__preview--marvin');
+        break;
+      case 'effect-phobos':
+        uploadPhoto.classList.add('effects__preview--phobos');
+        break;
+      case 'effect-heat':
+        uploadPhoto.classList.add('effects__preview--heat');
+        break;
     }
-    if (filterName === 'effect-chrome') {
-      uploadPhoto.classList.add('effects__preview--chrome');
-    }
-    if (filterName === 'effect-sepia') {
-      uploadPhoto.classList.add('effects__preview--sepia');
-    }
-    if (filterName === 'effect-marvin') {
-      uploadPhoto.classList.add('effects__preview--marvin');
-    }
-    if (filterName === 'effect-phobos') {
-      uploadPhoto.classList.add('effects__preview--phobos');
-    }
-    if (filterName === 'effect-heat') {
-      uploadPhoto.classList.add('effects__preview--heat');
-    }
+    return uploadPhoto.className;
+
   };
 
   // функция скрытия слайдера, если выбран эффект «Оригинал»
   var sliderHidden = function (evt) {
-    var filterName = evt.target.parentNode.htmlFor;
+    var filterName = evt.target.parentElement.htmlFor;
     if (filterName === 'effect-none') {
       effectLevelSlider.classList.add('hidden');
     } else {
@@ -127,13 +131,12 @@
     }
   };
 
-
-  var resetEffect = function (FILTERS) {
-    for (var i = 0; i < window.form.FILTERS.length; i++) {
-      uploadPhoto.classList.remove('effects__preview--' + window.form.FILTERS[i]);
-    };
-  }
-
+  // функция сброса фильтров, примененных ранее
+  var resetEffect = function (arr) {
+    for (var i = 0; i < arr.length; i++) {
+      uploadPhoto.classList.remove('effects__preview--' + arr[i]);
+    }
+  };
 
   // максимальные значения фильтров по дефолту
   var getDefaultFilterMax = function () {
@@ -161,7 +164,7 @@
 
 
   // функция установки интенсивности фильтров
-  var changeIntensityFilters = function () {
+  window.changeIntensityFilters = function () {
 
     var sliderPinRadius = window.slider.sliderPin.offsetWidth / 2;
     var sliderPinPosition = window.slider.sliderPin.offsetLeft - sliderPinRadius;
@@ -206,26 +209,20 @@
   var toggleFilter = function (arr) {
     for (var i = 0; i < arr.length; i++) {
 
-      arr[i].addEventListener('click', function(evt) {
+      arr[i].addEventListener('click', function (evt) {
         resetEffect(window.form.FILTERS);
         resetIntensityFilters();
         window.getDefaultSlider();
         sliderHidden(evt);
 
         // добавление класса фильтра
-        imgUploadPreview.classList.add(getClassName(evt));
+        uploadPhoto.classList.add(getClassName(evt));
         getDefaultFilterMax();
-
-        // меняем интенсивность фильтра
-        window.slider.sliderPin.addEventListener('mouseup', function() {
-          changeIntensityFilters();
-        });
       });
     }
   };
 
   toggleFilter(effectsLabels);
-
 
 
   // отправка данных на сервер
@@ -243,7 +240,6 @@
     return success;
   };
 
-
   // закрытие окна успешной загрузки
   successButton.addEventListener('click', function (evt) {
     success.remove();
@@ -260,7 +256,6 @@
   });
 
 
-
   // обработчик ошибки
   var errorSaveHandler = function (errorMessage) {
     var error = document.querySelector('#error').content.querySelector('.error');
@@ -270,7 +265,6 @@
     document.querySelector('main').append(error);
     return error;
   };
-
 
   // закрытие окна об ошибке
   errorButton.addEventListener('click', function () {
@@ -287,11 +281,18 @@
     error.remove();
   });
 
-  document.addEventListener('submit', function (evt) {
-    imgUploadOverlay.classList.add('hidden');
-    evt.preventDefault();
-    window.backend.save(new FormData(formUpload), successSaveHandler, errorSaveHandler);
+  var submitFormHandler = function () {
+    formUpload.addEventListener('submit', function (evt) {
+      window.backend.save(new FormData(formUpload), function (response) {
+        imgUploadOverlay.classList.add('hidden');
+      });
+      evt.preventDefault();
+    });
+  };
 
-  });
+  // buttonSubmit.addEventListener('click', function (evt) {
+
+
+  // });
 
 })();

@@ -57,7 +57,8 @@
 
   window.backend = {
     save: save,
-    load: load
+    load: load,
+    REQUEST_STATUS_OK: REQUEST_STATUS_OK
   };
 
 })();
