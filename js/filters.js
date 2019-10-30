@@ -8,7 +8,7 @@
   var effectsLabels = document.querySelectorAll('.effects__label');
   var effectLevelValue = document.querySelector('.effect-level__value');
 
- var FILTER_DEFAULT = {
+  var FILTER_DEFAULT = {
     chrome: 1,
     sepia: 1,
     marvin: 100,
@@ -40,7 +40,7 @@
 
 
   // добавляем класс для фото соответственно выбранному фильтру
-  var getClassName = function (evt) {
+  window.getClassName = function (evt) {
     var filterName = evt.target.parentElement.htmlFor;
 
     switch (filterName) {
@@ -86,20 +86,20 @@
 
   // максимальные значения фильтров по дефолту
   var getDefaultFilterMax = function () {
-    if (imgUploadPreview.classList.contains('effects__preview--chrome')) {
-      imgUploadPreview.style.filter = 'grayscale(' + FILTER_DEFAULT.chrome + ')';
+    if (uploadPhoto.className === 'effects__preview--chrome') {
+      uploadPhoto.style.filter = 'grayscale(' + FILTER_DEFAULT.chrome + ')';
     }
-    if (imgUploadPreview.classList.contains('effects__preview--sepia')) {
-      imgUploadPreview.style.filter = 'sepia(' + FILTER_DEFAULT.sepia + ')';
+    if (uploadPhoto.className === 'effects__preview--sepia') {
+      uploadPhoto.style.filter = 'sepia(' + FILTER_DEFAULT.sepia + ')';
     }
-    if (imgUploadPreview.classList.contains('effects__preview--marvin')) {
-      imgUploadPreview.style.filter = 'marvin(' + FILTER_DEFAULT.marvin + ')';
+    if (uploadPhoto.className === 'effects__preview--marvin') {
+      uploadPhoto.style.filter = 'marvin(' + FILTER_DEFAULT.marvin + ')';
     }
-    if (imgUploadPreview.classList.contains('effects__preview--phobos')) {
-      imgUploadPreview.style.filter = 'phobos(' + FILTER_DEFAULT.phobos + ')';
+    if (uploadPhoto.className === 'effects__preview--phobos') {
+      uploadPhoto.style.filter = 'phobos(' + FILTER_DEFAULT.phobos + ')';
     }
-    if (imgUploadPreview.classList.contains('effects__preview--heat')) {
-      imgUploadPreview.style.filter = 'brightness(' + FILTER_DEFAULT.heat + ')';
+    if (uploadPhoto.className === 'effects__preview--heat') {
+      uploadPhoto.style.filter = 'brightness(' + FILTER_DEFAULT.heat + ')';
     }
   };
 
@@ -120,23 +120,23 @@
     var rateIntensityFilter = getProportion(sliderPinPosition, sliderLineWidth);
 
     switch (true) {
-      case uploadPhoto.classList.contains('effects__preview--chrome'):
+      case uploadPhoto.className === 'effects__preview--chrome':
         effectLevelValue.value = rateIntensityFilter * FILTER_DEFAULT.chrome;
         uploadPhoto.style.filter = 'grayscale(' + effectLevelValue.value + ')';
         break;
-      case uploadPhoto.classList.contains('effects__preview--sepia'):
+      case uploadPhoto.className === 'effects__preview--sepia':
         effectLevelValue.value = rateIntensityFilter * FILTER_DEFAULT.sepia;
         uploadPhoto.style.filter = 'sepia(' + effectLevelValue.value + ')';
         break;
-      case uploadPhoto.classList.contains('effects__preview--marvin'):
+      case uploadPhoto.className === 'effects__preview--marvin':
         effectLevelValue.value = rateIntensityFilter * FILTER_DEFAULT.marvin;
         uploadPhoto.style.filter = 'invert(' + effectLevelValue.value + '%)';
         break;
-      case uploadPhoto.classList.contains('effects__preview--phobos'):
+      case uploadPhoto.className === 'effects__preview--phobos':
         effectLevelValue.value = rateIntensityFilter * FILTER_DEFAULT.phobos;
         uploadPhoto.style.filter = 'blur(' + effectLevelValue.value + 'px)';
         break;
-      case uploadPhoto.classList.contains('effects__preview--heat'):
+      case uploadPhoto.className === 'effects__preview--heat':
         effectLevelValue.value = rateIntensityFilter * FILTER_DEFAULT.heat;
         uploadPhoto.style.filter = 'brightness(' + effectLevelValue.value + ')';
         break;
@@ -162,8 +162,9 @@
         sliderHidden(evt);
 
         // добавление класса фильтра
-        uploadPhoto.classList.add(getClassName(evt));
+        window.getClassName(evt);
         getDefaultFilterMax();
+        window.changeIntensityFilters();
       });
     }
   };
