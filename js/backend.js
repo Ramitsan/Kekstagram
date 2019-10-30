@@ -3,7 +3,7 @@
 (function () {
   var URL_SAVE = 'https://js.dump.academy/kekstagram';
   var URL_LOAD = 'https://js.dump.academy/kekstagram/data';
-  var REQUEST_TIMEOUT = 10000; // 10s
+  var REQUEST_TIMEOUT = 3000; // 3s
   var REQUEST_STATUS_OK = 200;
   var REQUEST_STATUS_BAD = 400;
   var REQUEST_STATUS_NOT_FOUND = 404;
@@ -57,8 +57,7 @@
 
   window.backend = {
     save: save,
-    load: load,
-    REQUEST_STATUS_OK: REQUEST_STATUS_OK
+    load: load
   };
 
 })();

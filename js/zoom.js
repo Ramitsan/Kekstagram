@@ -48,8 +48,8 @@
 
   // показ измененного масштаба изображения
   var resize = function () {
-    window.form.imgUploadPreview.classList.remove('scale-25', 'scale-50', 'scale-75', 'scale-100');
-    window.form.imgUploadPreview.classList.add('scale-' + scaleControlValueNumber);
+    window.filters.imgUploadPreview.classList.remove('scale-25', 'scale-50', 'scale-75', 'scale-100');
+    window.filters.imgUploadPreview.classList.add('scale-' + scaleControlValueNumber);
   };
 
   var photoSmaller = function () {

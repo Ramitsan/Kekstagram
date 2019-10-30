@@ -25,7 +25,7 @@
   window.getDefaultSlider = function () {
     sliderPin.style.left = EFFECT_MAX_VALUE + '%';
     sliderEffectDepth.style.width = EFFECT_MAX_VALUE + '%';
-    window.form.effectLevelValue.value = EFFECT_MAX_VALUE;
+    window.filters.effectLevelValue.value = EFFECT_MAX_VALUE;
   };
 
   // перемещение ползунка слайдера
