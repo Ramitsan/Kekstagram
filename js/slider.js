@@ -25,7 +25,7 @@
   window.getDefaultSlider = function () {
     sliderPin.style.left = EFFECT_MAX_VALUE + '%';
     sliderEffectDepth.style.width = EFFECT_MAX_VALUE + '%';
-    window.form.effectLevelValue.value = EFFECT_MAX_VALUE;
+    window.filters.effectLevelValue.value = EFFECT_MAX_VALUE;
   };
 
   // перемещение ползунка слайдера
@@ -52,13 +52,16 @@
       } else {
         window.form.formUpload.removeEventListener('mousemove', onMouseMove);
       }
+
+      sliderEffectDepth.style.width = sliderPin.style.left;
+      window.changeIntensityFilters();
     };
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
 
       window.form.formUpload.removeEventListener('mousemove', onMouseMove);
-      // window.form.formUpload.removeEventListener('mouseup', onMouseUp);
+      window.form.formUpload.removeEventListener('mouseup', onMouseUp);
     };
 
     window.form.formUpload.addEventListener('mousemove', onMouseMove);

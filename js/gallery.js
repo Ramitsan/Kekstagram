@@ -98,7 +98,7 @@
 
     pictureElementImg.src = pictureItem.url;
     pictureElement.querySelector('.picture__likes').textContent = pictureItem.likes;
-    pictureElement.querySelector('.picture__comments').textContent = pictureItem.comments;
+    pictureElement.querySelector('.picture__comments').textContent = pictureItem.comments.length;
 
     return pictureElement;
   };
@@ -120,7 +120,7 @@
 
 
   // обработчик успешной загрузки
-  var successHandler = function (arrPhotos) {
+  var successLoadHandler = function (arrPhotos) {
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < window.data.PHOTOS_AMOUNT; i++) {
@@ -132,12 +132,16 @@
 
 
   // обработчик ошибки
-  var errorHandler = function () {
-
+  var errorLoadHandler = function (errorMessage) {
     var error = document.querySelector('#error').content.querySelector('.error');
+    error.querySelector('.error__title').textContent = errorMessage;
+    error.querySelector('.error__title').style.lineHeight = '50px';
+
+
     document.querySelector('main').append(error);
     return error;
   };
 
-  window.load(successHandler, errorHandler);
+  window.backend.load(successLoadHandler, errorLoadHandler);
+
 })();
