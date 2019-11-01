@@ -92,11 +92,9 @@
   // };
 
   // Рендер DOM-элемента на основе объекта
-  var renderPicture = function (pictureItem) {
+  window.renderPicture = function (pictureItem) {
     var pictureElement = templatePictureItem.cloneNode(true);
-    var pictureElementImg = pictureElement.querySelector('.picture__img');
-
-    pictureElementImg.src = pictureItem.url;
+    pictureElement.querySelector('.picture__img').src = pictureItem.url;
     pictureElement.querySelector('.picture__likes').textContent = pictureItem.likes;
     pictureElement.querySelector('.picture__comments').textContent = pictureItem.comments.length;
 

@@ -28,17 +28,6 @@
     FILTERS: FILTERS
   };
 
-
-  // функция сброса всех значений
-  window.defaultSettings = function () {
-    imgUploadPreview.classList.add('scale-' + window.zoom.defoltSize);
-    resetEffect(FILTERS);
-    window.scaleIndicatorDefault();
-    window.hashtags.textHashtagsInput.value = '';
-    window.form.commentInput.value = '';
-  };
-
-
   // добавляем класс для фото соответственно выбранному фильтру
   window.getClassName = function (evt) {
     var filterName = evt.target.parentElement.htmlFor;
@@ -81,6 +70,7 @@
   var resetEffect = function (arr) {
     for (var i = 0; i < arr.length; i++) {
       uploadPhoto.classList.remove('effects__preview--' + arr[i]);
+      uploadPhoto.classList.add('effects__preview--none');
     }
   };
 
@@ -146,6 +136,14 @@
     }
   };
 
+  // функция сброса всех значений
+  window.defaultSettings = function () {
+    window.scaleDefault();
+    resetEffect(FILTERS);
+    window.hashtags.textHashtagsInput.value = '';
+    window.form.commentInput.value = '';
+  };
+
   var resetIntensityFilters = function () {
     uploadPhoto.style.filter = '';
   };
@@ -156,7 +154,7 @@
     for (var i = 0; i < arr.length; i++) {
 
       arr[i].addEventListener('click', function (evt) {
-        resetEffect(FILTERS);
+        defaultSettings();
         resetIntensityFilters();
         window.getDefaultSlider();
         sliderHidden(evt);

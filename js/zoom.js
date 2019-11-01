@@ -23,12 +23,11 @@
     defoltSize: defoltSize
   };
 
-  // показатель масштаба при открытии фотографии
-  window.scaleIndicatorDefault = function () {
+  // масштаб по дефолту
+  window.scaleDefault = function () {
     scaleControlValue.value = defoltSize + '%';
+    window.filters.imgUploadPreview.style.transform = 'scale(1)';
   };
-  window.scaleIndicatorDefault();
-
 
   // уменьшение масштаба изображения
   var controlSmallerHandler = function () {
@@ -48,8 +47,7 @@
 
   // показ измененного масштаба изображения
   var resize = function () {
-    window.filters.imgUploadPreview.classList.remove('scale-25', 'scale-50', 'scale-75', 'scale-100');
-    window.filters.imgUploadPreview.classList.add('scale-' + scaleControlValueNumber);
+    window.filters.imgUploadPreview.style.transform = 'scale(' + (scaleControlValueNumber / 100) + ')';
   };
 
   var photoSmaller = function () {

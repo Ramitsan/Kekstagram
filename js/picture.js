@@ -28,7 +28,15 @@
   };
 
   // // Показываем большое фото
-  // bigPicture.classList.remove('hidden');
+  // window.openBigPicture = function () {
+  //   document.querySelector('body').classList.add('modal-open');
+  //   bigPicture.classList.remove('hidden');
+  // };
+
+  // window.openBigPicture();
+
+
+
 
   // // закрываем большое фото
   // bigPictureCancel.addEventListener('click', function () {
@@ -87,8 +95,9 @@
 
   bigPictureShow();
 
-  // прячем блоки счетчика комментариев и загрузки новых комментариев
-  socialCommentCount.classList.add('visually-hidden');
-  commentsLoader.classList.add('visually-hidden');
+
+  // // прячем блоки счетчика комментариев и загрузки новых комментариев
+  // socialCommentCount.classList.add('visually-hidden');
+  // commentsLoader.classList.add('visually-hidden');
 
 })();
