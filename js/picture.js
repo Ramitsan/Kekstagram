@@ -35,9 +35,6 @@
 
   // window.openBigPicture();
 
-
-
-
   // // закрываем большое фото
   // bigPictureCancel.addEventListener('click', function () {
   //   bigPicture.classList.add('hidden');

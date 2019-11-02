@@ -138,7 +138,7 @@
 
   // функция сброса всех значений
   window.defaultSettings = function () {
-    window.scaleDefault();
+    window.scaleIndicatorDefault();
     resetEffect(FILTERS);
     window.hashtags.textHashtagsInput.value = '';
     window.form.commentInput.value = '';
@@ -154,7 +154,7 @@
     for (var i = 0; i < arr.length; i++) {
 
       arr[i].addEventListener('click', function (evt) {
-        defaultSettings();
+        window.defaultSettings();
         resetIntensityFilters();
         window.getDefaultSlider();
         sliderHidden(evt);

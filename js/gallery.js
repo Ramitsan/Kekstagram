@@ -122,7 +122,7 @@
     var fragment = document.createDocumentFragment();
 
     for (var i = 0; i < window.data.PHOTOS_AMOUNT; i++) {
-      fragment.appendChild(renderPicture(arrPhotos[i]));
+      fragment.appendChild(window.renderPicture(arrPhotos[i]));
     }
 
     pictureList.appendChild(fragment);

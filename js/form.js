@@ -68,6 +68,8 @@
   var error = document.querySelector('#error').content.querySelector('.error');
   var errorButton = error.querySelector('.error__button');
   // var buttonSubmit = document.querySelector('.img-upload__submit');
+  var successInnerElement;
+  var errorInnerElement;
 
 
   var onResponse = function () {
@@ -77,8 +79,10 @@
   // обработчик успешной загрузки
   var successSaveHandler = function () {
     onResponse();
+    uploadFile.setAttribute('value', null);
     success.style.zIndex = '100';
     document.querySelector('main').appendChild(success);
+    successInnerElement = document.querySelector('.success__inner');
   };
 
   // закрытие окна успешной загрузки по клику
@@ -94,8 +98,10 @@
   });
 
   // по клику на произвольной области
-  success.addEventListener('click', function () {
-    success.remove();
+  success.addEventListener('click', function (e) {
+    if (e.target !== successInnerElement) {
+      success.remove();
+    }
   });
 
 
@@ -103,6 +109,7 @@
   var errorSaveHandler = function () {
     onResponse();
     document.querySelector('main').appendChild(error);
+    errorInnerElement = document.querySelector('.error__inner');
   };
 
   // закрытие окна об ошибке по клику
@@ -118,15 +125,16 @@
   });
 
   // по клику на произвольной области
-  error.addEventListener('click', function () {
-    error.remove();
+  error.addEventListener('click', function (e) {
+    if (e.target !== errorInnerElement) {
+      error.remove();
+    }
   });
 
   // отправка данных формы
   // var submitFormHandler = function () {
   formUpload.addEventListener('submit', function (evt) {
     evt.preventDefault();
-
     window.backend.save(new FormData(formUpload), successSaveHandler, errorSaveHandler);
   });
   // };
