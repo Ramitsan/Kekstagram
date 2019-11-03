@@ -5,13 +5,11 @@
   // переменные
   var templatePicture = document.querySelector('#picture');
   var templatePictureItem = templatePicture.content.querySelector('.picture');
-  var pictureList = document.querySelector('.pictures');
 
 
   window.gallery = {
     templatePicture: templatePicture,
-    templatePictureItem: templatePictureItem,
-    pictureList: pictureList
+    templatePictureItem: templatePictureItem
   };
 
 
@@ -114,18 +112,15 @@
   // var completedPhotoList = createPhotoObjects(window.data.PHOTOS_AMOUNT);
 
   // // Отрисовка сгенерированных DOM-элементов
-  // pictureList.appendChild(renderPictureList(completedPhotoList));
+  // picturesElement.appendChild(renderPictureList(completedPhotoList));
 
 
   // обработчик успешной загрузки
   var successLoadHandler = function (arrPhotos) {
-    var fragment = document.createDocumentFragment();
-
-    for (var i = 0; i < window.data.PHOTOS_AMOUNT; i++) {
-      fragment.appendChild(window.renderPicture(arrPhotos[i]));
-    }
-
-    pictureList.appendChild(fragment);
+    window.data.photos = arrPhotos;
+    window.data.photos.forEach(function (it) {
+      window.picture.picturesElement.appendChild(window.renderPicture(it));
+    });
   };
 
 
