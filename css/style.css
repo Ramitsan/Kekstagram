@@ -544,22 +544,6 @@ main {
   max-height: 600px;
 }
 
-.scale-25 {
-  transform: scale(0.25);
-}
-
-.scale-50 {
-  transform: scale(0.5);
-}
-
-.scale-75 {
-  transform: scale(0.75);
-}
-
-.scale-100 {
-  transform: scale(1);
-}
-
 /**
  * Шкала регулирования глубины фильтра
  */

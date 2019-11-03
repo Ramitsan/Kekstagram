@@ -28,9 +28,6 @@
         case hashtag === '#' && hashtag.length === 1:
           target.setCustomValidity('Хештег не может состоять только из одной решётки');
           break;
-        case arrHashtags.length > MAX_HASHTEGS:
-          target.setCustomValidity('Количество хэштегов не должно превышать ' + MAX_HASHTEGS);
-          break;
         case hashtag.length > MAX_HASHTEGS_LENGTH:
           target.setCustomValidity('Хэштег не должен превышать ' + MAX_HASHTEGS_LENGTH + ' символов');
           break;
@@ -41,8 +38,14 @@
           target.setCustomValidity('');
       }
     }
+
+    // не работает
+    if (arrHashtags.length > MAX_HASHTEGS) {
+      target.setCustomValidity('Количество хэштегов не должно превышать ' + MAX_HASHTEGS);
+    }
   };
 
+  // не работает
   textHashtagsInput.addEventListener('input', function (evt) {
     var hashtagValue = textHashtagsInput.value.toLowerCase();
     var target = evt.target;
