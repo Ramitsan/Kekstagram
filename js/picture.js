@@ -83,7 +83,7 @@
     if (e.target.parentNode.classList.contains('picture')) {
       var currentImgSrc = e.target.getAttribute('src');
 
-      currentPicture = window.data.photos.find (function (it) {
+      currentPicture = window.data.photos.find(function (it) {
         if (it.url === currentImgSrc) {
           return it;
         }
@@ -110,7 +110,6 @@
   };
 
   var setBigPictureInfo = function (picture) {
-    console.log(picture);
     bigPictureImg.setAttribute('src', picture.url);
     socialCaption.textContent = picture.description;
     likesCount.textContent = picture.likes;

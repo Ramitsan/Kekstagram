@@ -140,7 +140,7 @@
   window.defaultSettings = function () {
     window.scaleIndicatorDefault();
     resetEffect(FILTERS);
-    window.hashtags.textHashtagsInput.value = '';
+    window.hashtags.hashtagInputElement.value = '';
     window.form.commentInput.value = '';
   };
 

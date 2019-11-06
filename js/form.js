@@ -41,7 +41,7 @@
   });
 
   // если фокус в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы
-  window.hashtags.textHashtagsInput.addEventListener('keydown', function (evt) {
+  window.hashtags.hashtagInputElement.addEventListener('keydown', function (evt) {
     if (window.pressEsc) {
       evt.stopPropagation();
     }
@@ -132,22 +132,11 @@
   });
 
   // отправка данных формы
-  // var submitFormHandler = function () {
   formUpload.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(formUpload), successSaveHandler, errorSaveHandler);
+    if (formUpload.checkValidity()) {
+      window.backend.save(new FormData(formUpload), successSaveHandler, errorSaveHandler);
+    }
   });
-  // };
-
-
-  // buttonSubmit.addEventListener('click', function (evt) {
-  //   evt.preventDefault();
-  //   window.backend.save(new FormData(formUpload), successSaveHandler, errorSaveHandler);
-  // });
-
-  // formUpload.addEventListener('submit', function (evt) {
-  //   evt.preventDefault();
-  //   window.backend.save(new FormData(formUpload), successSaveHandler, errorSaveHandler);
-  // });
 
 })();
