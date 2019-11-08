@@ -72,10 +72,8 @@
   var error = document.querySelector('#error').content.querySelector('.error');
   var errorButton = error.querySelector('.error__button');
   // var buttonSubmit = document.querySelector('.img-upload__submit');
-  var successInnerElement;
-  var errorInnerElement;
-  var successElement = document.querySelector('.success');
-  var errorElement = document.querySelector('.error');
+  var successElement;
+  var errorElement;
 
 
   var onResponse = function () {
@@ -88,7 +86,7 @@
     uploadFile.setAttribute('value', null);
     success.style.zIndex = '100';
     document.querySelector('main').appendChild(success);
-    successInnerElement = document.querySelector('.success__inner');
+    successElement = document.querySelector('.success');
   };
 
   // закрытие окна успешной загрузки по клику
@@ -115,7 +113,7 @@
   var errorSaveHandler = function () {
     onResponse();
     document.querySelector('main').appendChild(error);
-    errorInnerElement = document.querySelector('.error__inner');
+    errorElement = document.querySelector('.error');
   };
 
   // закрытие окна об ошибке по клику
