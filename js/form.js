@@ -20,23 +20,27 @@
   };
 
 
+  var resetFormHandler = function () {
+    imgUploadOverlay.classList.add('hidden');
+    window.getOriginSlider();
+  }
+
   // открытие и закрытие окна редактирования фото
   uploadFile.addEventListener('change', function () {
     imgUploadOverlay.classList.remove('hidden');
-    window.filters.effectLevelSlider.classList.add('hidden');
-    window.defaultSettings();
+    window.getOriginSlider();
   });
 
+
   uploadCancel.addEventListener('click', function () {
-    imgUploadOverlay.classList.add('hidden');
+    resetFormHandler();
   });
 
 
   // закрытие по клавише ESC
-  // не работает с window.pressEsc!!!
   document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.util.ESC_KEYCODE) {
-      imgUploadOverlay.classList.add('hidden');
+    if (window.pressEsc) {
+      resetFormHandler();
     }
   });
 
@@ -70,6 +74,8 @@
   // var buttonSubmit = document.querySelector('.img-upload__submit');
   var successInnerElement;
   var errorInnerElement;
+  var successElement = document.querySelector('.success');
+  var errorElement = document.querySelector('.error');
 
 
   var onResponse = function () {
@@ -99,7 +105,7 @@
 
   // по клику на произвольной области
   success.addEventListener('click', function (e) {
-    if (e.target !== successInnerElement) {
+    if (e.target === successElement) {
       success.remove();
     }
   });
@@ -126,7 +132,7 @@
 
   // по клику на произвольной области
   error.addEventListener('click', function (e) {
-    if (e.target !== errorInnerElement) {
+    if (e.target === errorElement) {
       error.remove();
     }
   });
