@@ -33,6 +33,7 @@
   filterRandomBtnElement.addEventListener('click', function () {
     switchFilter(filterRandomBtnElement);
     updatePicture();
+    // window.debounce(sortByRandom); // не работает
   });
   filterDiscussedBtnElement.addEventListener('click', function () {
     switchFilter(filterDiscussedBtnElement);

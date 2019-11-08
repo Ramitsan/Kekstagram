@@ -23,7 +23,7 @@
     window.data.photos.forEach(function (it) {
       window.picture.picturesElement.appendChild(window.renderPicture(it));
     });
-    window.filter.show()
+    window.filter.show();
   };
 
   var errorLoadHandler = function (errorMessage) {
@@ -36,13 +36,13 @@
     return error;
   };
 
-  var removeCollection = function(collection) {
+  var removeCollection = function (collection) {
     collection.forEach(function (it) {
       it.remove();
     });
   };
 
-  var appendPhotosFragment = function(dataArray) {
+  var appendPhotosFragment = function (dataArray) {
     var fragment = document.createDocumentFragment();
     dataArray.forEach(function (it) {
       fragment.appendChild(renderPicture(it));
@@ -55,6 +55,6 @@
 
   window.gallery = {
     render: appendPhotosFragment
-  }
+  };
 
 })();
