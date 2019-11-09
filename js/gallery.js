@@ -5,92 +5,11 @@
   // переменные
   var templatePicture = document.querySelector('#picture');
   var templatePictureItem = templatePicture.content.querySelector('.picture');
+  var picturesElement = document.querySelector('.pictures');
 
-
-  window.gallery = {
-    templatePicture: templatePicture,
-    templatePictureItem: templatePictureItem
-  };
-
-
-  // генерируем случайный текст случайного коммента
-  var getRandomMessage = function (arr) {
-    var randomMessage = window.getRandomIndex(0, arr.length);
-    return arr[randomMessage];
-  };
-
-  // генерируем случайное имя
-  var getRandomName = function (arr) {
-    var randomName = window.getRandomIndex(0, arr.length);
-    return arr[randomName];
-  };
-
-  // // генерируем случайное описание фото
-  // var getRandomDescription = function (arr) {
-  //   var randomDescription = window.getRandomIndex(0, arr.length);
-  //   return arr[randomDescription];
-  // };
-
-  // функция генерации одного комментария
-  var createPhotoComment = function (_avatar, _message, _name) {
-    var comment = {
-      avatar: _avatar,
-      message: _message,
-      name: _name
-    };
-    return comment;
-  };
-
-
-  // функция генерации массива комментариев
-  var createPhotoComments = function (length) {
-    var comments = [];
-    for (var i = 0; i < length; i++) {
-      var numberAvatar = 'img/avatar-' + window.getRandomIndex(1, window.data.AVATAR_AMOUNT) + '.svg';
-      var message = getRandomMessage(window.data.COMMENTS_PHOTOS);
-      var name = getRandomName(window.data.NAMES_AUTORS_PHOTOS);
-
-      comments[i] = createPhotoComment(numberAvatar, message, name);
-    }
-    return comments;
-  };
-
-  window.arrComments = createPhotoComments(window.data.PHOTOS_AMOUNT);
-
-  // // функция генерации случайного комментария из массива комментариев
-  // var getRandomComment = function (arr) {
-  //   var randomComment = window.getRandomIndex(0, arr.length);
-  //   return arr[randomComment];
-  // };
-
-
-  // // функция создания одного объекта с фото
-  // var createPhotoObject = function (_url, _description, _likes, _comments) {
-  //   var photo = {
-  //     url: _url,
-  //     description: _description,
-  //     likes: _likes,
-  //     comment: _comments
-  //   };
-  //   return photo;
-  // };
-
-  // функция создания массива объектов с фото
-  // var createPhotoObjects = function (length) {
-  //   var photos = [];
-  //   for (var i = 0; i < length; i++) {
-  //     var photoUrl = 'photos/' + (i + 1) + '.jpg';
-  //     var description = getRandomDescription(window.data.DESCRIPTION_PHOTOS);
-  //     var likes = window.getRandomIndex(window.data.MIN_LIKES, window.data.MAX_LIKES);
-  //     var comment = getRandomComment(window.arrComments);
-
-  //     photos[i] = createPhotoObject(photoUrl, description, likes, comment);
-  //   }
-  //   return photos;
-  // };
 
   // Рендер DOM-элемента на основе объекта
-  window.renderPicture = function (pictureItem) {
+  var renderPicture = function (pictureItem) {
     var pictureElement = templatePictureItem.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = pictureItem.url;
     pictureElement.querySelector('.picture__likes').textContent = pictureItem.likes;
@@ -99,42 +18,41 @@
     return pictureElement;
   };
 
-  // // Заполнение DOM-элемента на основе массива
-  // var renderPictureList = function (arrPhotos) {
-  //   var fragment = document.createDocumentFragment();
-  //   for (var i = 0; i < arrPhotos.length; i++) {
-  //     fragment.appendChild(renderPicture(arrPhotos[i]));
-  //   }
-  //   return fragment;
-  // };
-
-  // Получаем массив с фотографиями и коментариями
-  // var completedPhotoList = createPhotoObjects(window.data.PHOTOS_AMOUNT);
-
-  // // Отрисовка сгенерированных DOM-элементов
-  // picturesElement.appendChild(renderPictureList(completedPhotoList));
-
-
-  // обработчик успешной загрузки
   var successLoadHandler = function (arrPhotos) {
     window.data.photos = arrPhotos;
     window.data.photos.forEach(function (it) {
-      window.picture.picturesElement.appendChild(window.renderPicture(it));
+      picturesElement.appendChild(renderPicture(it));
     });
+    window.filter.show();
   };
 
-
-  // обработчик ошибки
   var errorLoadHandler = function (errorMessage) {
     var error = document.querySelector('#error').content.querySelector('.error');
     error.querySelector('.error__title').textContent = errorMessage;
     error.querySelector('.error__title').style.lineHeight = '50px';
-
-
     document.querySelector('main').append(error);
     return error;
   };
 
+  var removeCollection = function (collection) {
+    collection.forEach(function (it) {
+      it.remove();
+    });
+  };
+
+  var appendPhotosFragment = function (dataArray) {
+    var fragment = document.createDocumentFragment();
+    dataArray.forEach(function (it) {
+      fragment.appendChild(renderPicture(it));
+    });
+    removeCollection(picturesElement.querySelectorAll('.picture'));
+    window.picture.picturesElement.appendChild(fragment);
+  };
+
   window.backend.load(successLoadHandler, errorLoadHandler);
+
+  window.gallery = {
+    render: appendPhotosFragment
+  };
 
 })();

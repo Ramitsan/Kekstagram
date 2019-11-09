@@ -2,70 +2,109 @@
 
 (function () {
 
-  // перемещение ползунка слайдера
+  var COEFFICIENT_MAX = 1;
+  var Percent = {
+    MIN: 0,
+    MAX: 100,
+  };
+  var PhobosCoefficient = {
+    MIN: 0,
+    MAX: 3,
+  };
+  var HeatCoefficient = {
+    MIN: 1,
+    MAX: 3,
+  };
+  var NONE_EFFECT = 'none';
+  var convertProportion = function (coefficient, from, to) {
+    return (to - from) * coefficient + from;
+  };
+  var effectMap = {
+    'none': function () {
+      return '';
+    },
+    'chrome': function (coefficient) {
+      return 'grayscale(' + coefficient + ')';
+    },
+    'sepia': function (coefficient) {
+      return 'sepia(' + coefficient + ')';
+    },
+    'marvin': function (coefficient) {
+      return 'invert(' + (coefficient * Percent.MAX) + '%)';
+    },
+    'phobos': function (coefficient) {
+      return 'blur(' + convertProportion(coefficient, PhobosCoefficient.MIN, PhobosCoefficient.MAX) + 'px)';
+    },
+    'heat': function (coefficient) {
+      return 'brightness(' + convertProportion(coefficient, HeatCoefficient.MIN, HeatCoefficient.MAX);
+    },
+  };
+  var imgElement = document.querySelector('.img-upload__preview');
+  var lineElement = document.querySelector('.effect-level__line');
+  var pinElement = lineElement.querySelector('.effect-level__pin');
+  var depthElement = lineElement.querySelector('.effect-level__depth');
+  var rangeElement = document.querySelector('.effect-level__value');
 
-  var sliderPin = document.querySelector('.effect-level__pin');
-  var sliderLine = document.querySelector('.effect-level__line');
-  var sliderEffectDepth = document.querySelector('.effect-level__depth');
-  var EFFECT_MAX_VALUE = 100;
-
-  // var filterSaturationLevelDefault = 100;
-  // var sliderWidth = 495;
-  // var sliderPadding = 20;
-
-  window.slider = {
-    sliderPin: sliderPin,
-    sliderLine: sliderLine,
-    sliderEffectDepth: sliderEffectDepth,
-    EFFECT_MAX_VALUE: EFFECT_MAX_VALUE
+  var getMaxValuePinAndDepth = function () {
+    pinElement.style.left = Percent.MAX + '%';
+    depthElement.style.width = Percent.MAX + '%';
   };
 
-
-  // установка значения слайдера по дефолту
-  window.getDefaultSlider = function () {
-    sliderPin.style.left = EFFECT_MAX_VALUE + '%';
-    sliderEffectDepth.style.width = EFFECT_MAX_VALUE + '%';
-    window.filters.effectLevelValue.value = EFFECT_MAX_VALUE;
-  };
-
-  // перемещение ползунка слайдера
-  sliderPin.addEventListener('mousedown', function (evt) {
-    evt.preventDefault();
-
-    var startCoords = {
-      x: evt.clientX
+  var checkedElementValue = '';
+  lineElement.addEventListener('mousedown', function (downEvt) {
+    var coefficient = lineElement.getBoundingClientRect().width / rangeElement.max;
+    var getPinPosition = function (evt) {
+      rangeElement.value = (evt.clientX - lineElement.getBoundingClientRect().left) / coefficient;
+      pinElement.style.left = rangeElement.value * coefficient + 'px';
+      depthElement.style.width = rangeElement.value * coefficient + 'px';
+      imgElement.style.filter = effectMap[checkedElementValue](rangeElement.value / Percent.MAX);
     };
+    getPinPosition(downEvt);
 
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
-
-      var shift = {
-        x: startCoords.x - moveEvt.clientX
-      };
-
-      startCoords = {
-        x: moveEvt.clientX
-      };
-
-      if (sliderPin.offsetLeft - shift.x - sliderLine.style.left >= 0 && sliderPin.offsetLeft - shift.x <= sliderEffectDepth.offsetWidth) {
-        sliderPin.style.left = (sliderPin.offsetLeft - shift.x) + 'px';
-      } else {
-        window.form.formUpload.removeEventListener('mousemove', onMouseMove);
-      }
-
-      sliderEffectDepth.style.width = sliderPin.style.left;
-      window.changeIntensityFilters();
+      getPinPosition(moveEvt);
     };
-
-    var onMouseUp = function (upEvt) {
-      upEvt.preventDefault();
-
-      window.form.formUpload.removeEventListener('mousemove', onMouseMove);
-      window.form.formUpload.removeEventListener('mouseup', onMouseUp);
+    var onMouseUp = function () {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
     };
-
-    window.form.formUpload.addEventListener('mousemove', onMouseMove);
-    window.form.formUpload.addEventListener('mouseup', onMouseUp);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   });
+
+  var fieldsetElement = document.querySelector('.effect-level');
+
+  var getOrigin = function () {
+    imgElement.style.filter = '';
+    fieldsetElement.style.display = 'none';
+    rangeElement.value = Percent.MIN;
+  };
+
+  var getEffect = function (evt) {
+    imgElement.style.filter = effectMap[evt.target.value](COEFFICIENT_MAX);
+    getMaxValuePinAndDepth();
+    rangeElement.value = Percent.MAX;
+    fieldsetElement.style.display = 'block';
+  };
+  var addOnEffectsRadioChange = function (element) {
+    element.addEventListener('change', function (evt) {
+      checkedElementValue = evt.target.value;
+      if (evt.target.value === NONE_EFFECT) {
+        getOrigin();
+      } else {
+        getEffect(evt);
+      }
+    });
+  };
+
+  var radioCollection = document.querySelectorAll('.effects__list .effects__item .effects__radio');
+  radioCollection.forEach(function (it) {
+    addOnEffectsRadioChange(it);
+  });
+
+  getOrigin();
+
+  window.getOriginSlider = getOrigin;
 
 })();

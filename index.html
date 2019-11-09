@@ -50,7 +50,7 @@
                   </div>
                   <!-- Изменение глубины эффекта, накладываемого на изображение -->
                   <fieldset class="img-upload__effect-level  effect-level">
-                    <input class="effect-level__value" type="number" name="effect-level" value="20">
+                    <input class="effect-level__value" type="range" name="effect-level" value="20" min="0" max="100">
                     <div class="effect-level__line">
                       <div class="effect-level__pin" tabindex="0">Кнопка изменения глубины эффекта фотографии</div>
                       <div class="effect-level__depth">Глубина эффекта фотографии</div>
@@ -133,10 +133,10 @@
           <div class="social__header">
             <img class="social__picture" src="img/avatar-1.svg" alt="Аватар автора фотографии" width="35" height="35">
             <p class="social__caption">Тестим новую камеру! =)</p>
-            <p class="social__likes">Нравится <span class="likes-count">356</span></p>
+            <p class="social__likes">Нравится <span class="likes-count" tabindex="0">356</span></p>
           </div>
           <!-- Комментарии к изображению -->
-          <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
+          <div class="social__comment-count"><span class="comments-show">5</span> из <span class="comments-count">125</span> комментариев</div>
           <ul class="social__comments">
             <li class="social__comment">
               <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
@@ -215,11 +215,15 @@
   <script src="js/backend.js"></script>
   <script src="js/gallery.js"></script>
   <script src="js/picture.js"></script>
+  <script src="js/comments.js"></script>
   <script src="js/hashtags.js"></script>
-  <script src="js/filters.js"></script>
+  <script src="js/filter.js"></script>
+  <script src="js/debounce.js"></script>
   <script src="js/form.js"></script>
   <script src="js/zoom.js"></script>
   <script src="js/slider.js"></script>
+  <script src="js/chooser-image.js"></script>
+  <script src="js/load.js"></script>
 
 </body>
 
