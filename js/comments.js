@@ -61,6 +61,10 @@
     ShowedComment: ShowedComment,
     showedCommentsNumber: showedCommentsNumber,
     appendSocialComments: appendSocialComments,
-    loaderBtnElement: loaderBtnElement
+    loaderBtnElement: loaderBtnElement,
+
+    reset: function () {
+      showedCommentsNumber = ShowedComment.START;
+    }
   };
 })();

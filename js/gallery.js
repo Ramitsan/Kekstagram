@@ -9,7 +9,7 @@
 
 
   // Рендер DOM-элемента на основе объекта
-  window.renderPicture = function (pictureItem) {
+  var renderPicture = function (pictureItem) {
     var pictureElement = templatePictureItem.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = pictureItem.url;
     pictureElement.querySelector('.picture__likes').textContent = pictureItem.likes;
@@ -21,7 +21,7 @@
   var successLoadHandler = function (arrPhotos) {
     window.data.photos = arrPhotos;
     window.data.photos.forEach(function (it) {
-      window.picture.picturesElement.appendChild(window.renderPicture(it));
+      picturesElement.appendChild(renderPicture(it));
     });
     window.filter.show();
   };

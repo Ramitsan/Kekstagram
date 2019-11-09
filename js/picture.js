@@ -20,24 +20,26 @@
 
   var pictureClickHandler = function (e) {
     document.body.classList.add('modal-open');
-    if (e.target.parentNode.classList.contains('picture')) {
-      var currentImgSrc = e.target.getAttribute('src');
+
+    var picture = e.path.find(function (it) {
+      return (it.classList) ? it.classList.contains('picture') : false;
+    });
+    if (picture) {
+      var currentImgSrc = picture.querySelector('.picture__img').getAttribute('src');
 
       currentPicture = window.data.photos.find(function (it) {
-        if (it.url === currentImgSrc) {
-          return it;
-        }
+        return it.url === currentImgSrc;
       });
 
       setBigPictureInfo(currentPicture);
 
-      btnCancelElement.addEventListener('click', function (e) {
-        modalCloseHanler(e);
+      btnCancelElement.addEventListener('click', function (evt) {
+        modalCloseHanler(evt);
       });
 
-      document.addEventListener('keydown', function (e) {
-        if (e.keyCode === 27) {
-          modalCloseHanler(e);
+      document.addEventListener('keydown', function (evt) {
+        if (window.util.pressEsc) {
+          modalCloseHanler(evt);
         }
       });
     }
@@ -47,7 +49,7 @@
     document.body.classList.remove('modal-open');
     bigPicture.classList.add('hidden');
     window.comments.loaderBtnElement.classList.remove('hidden');
-    window.comments.showedCommentsNumber = window.comments.ShowedComment.START;
+    window.comments.reset();
     document.removeEventListener('click', picturesElement);
   };
 
@@ -60,6 +62,7 @@
 
     window.comments.appendSocialComments(picture.comments);
     bigPicture.classList.remove('hidden');
+    likesCount.focus();
   };
 
   window.picture = {
