@@ -46,18 +46,14 @@
     xhr.send(data);
   };
 
-  var save = function (data, onLoad, onError) {
-    serverRequest(URL_SAVE, 'POST', data, onLoad, onError);
-  };
-
-  var load = function (onLoad, onError) {
-    serverRequest(URL_LOAD, 'GET', null, onLoad, onError);
-  };
-
-
   window.backend = {
-    save: save,
-    load: load
+    save: function (data, onLoad, onError) {
+      serverRequest(URL_SAVE, 'POST', data, onLoad, onError);
+    },
+
+    load: function (onLoad, onError) {
+      serverRequest(URL_LOAD, 'GET', null, onLoad, onError);
+    }
   };
 
 })();

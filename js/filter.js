@@ -28,16 +28,15 @@
 
   filterPopularBtnElement.addEventListener('click', function () {
     switchFilter(filterPopularBtnElement);
-    updatePicture();
+    window.debounce(updatePicture);
   });
   filterRandomBtnElement.addEventListener('click', function () {
     switchFilter(filterRandomBtnElement);
-    updatePicture();
-    // window.debounce(sortByRandom); // не работает
+    window.debounce(updatePicture);
   });
   filterDiscussedBtnElement.addEventListener('click', function () {
     switchFilter(filterDiscussedBtnElement);
-    updatePicture();
+    window.debounce(updatePicture);
   });
 
   var sortByRandom = function (photos) {
@@ -70,6 +69,6 @@
   window.filter = {
     show: function () {
       imgFiltersElement.classList.remove('img-filters--inactive');
-    },
+    }
   };
 })();

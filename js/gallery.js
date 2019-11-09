@@ -30,8 +30,6 @@
     var error = document.querySelector('#error').content.querySelector('.error');
     error.querySelector('.error__title').textContent = errorMessage;
     error.querySelector('.error__title').style.lineHeight = '50px';
-
-
     document.querySelector('main').append(error);
     return error;
   };
