@@ -20,6 +20,7 @@
     imgUploadOverlay.classList.add('hidden');
     window.getOriginSlider();
     window.hashtags.hashtagInputElement.style.borderColor = '';
+    window.hashtags.hashtagInputElement.setCustomValidity('');
     formUpload.reset();
   };
 

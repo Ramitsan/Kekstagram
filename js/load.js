@@ -10,7 +10,7 @@
   var successElement;
   var errorElement;
 
-  var onResponse = function () {
+  var responseFormHandler = function () {
     window.form.imgUploadOverlay.classList.add('hidden');
     window.form.uploadFile.setAttribute('value', null);
     window.form.resetFormHandler();
@@ -18,7 +18,7 @@
 
   // обработчик успешной загрузки
   var successSaveHandler = function () {
-    onResponse();
+    responseFormHandler();
     document.querySelector('main').appendChild(success);
     successElement = document.querySelector('.success');
   };
@@ -44,7 +44,7 @@
 
   // обработчик ошибки
   var errorSaveHandler = function () {
-    onResponse();
+    responseFormHandler();
     document.querySelector('main').appendChild(error);
     errorElement = document.querySelector('.error');
   };

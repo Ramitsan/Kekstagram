@@ -46,8 +46,9 @@
   var rangeElement = document.querySelector('.effect-level__value');
 
   var getMaxValuePinAndDepth = function () {
-    pinElement.style.left = Percent.MAX + '%';
-    depthElement.style.width = Percent.MAX + '%';
+    var percentMax = Percent.MAX + '%';
+    pinElement.style.left = percentMax;
+    depthElement.style.width = percentMax;
   };
 
   var checkedElementValue = '';
@@ -55,8 +56,9 @@
     var coefficient = lineElement.getBoundingClientRect().width / rangeElement.max;
     var getPinPosition = function (evt) {
       rangeElement.value = (evt.clientX - lineElement.getBoundingClientRect().left) / coefficient;
-      pinElement.style.left = rangeElement.value * coefficient + 'px';
-      depthElement.style.width = rangeElement.value * coefficient + 'px';
+      var effectLevel = rangeElement.value * coefficient + 'px';
+      pinElement.style.left = effectLevel;
+      depthElement.style.width = effectLevel;
       imgElement.style.filter = effectMap[checkedElementValue](rangeElement.value / Percent.MAX);
     };
     getPinPosition(downEvt);
