@@ -21,6 +21,11 @@
       errorFormatElement = document.querySelector('.error');
       var errorTitle = errorFormatElement.querySelector('.error__title');
       errorTitle.textContent = 'Неверный формат изображения';
+      var errorButtons = errorFormatElement.querySelector('.error__buttons');
+      var errorButton = errorFormatElement.querySelectorAll('.error__button');
+      errorButtons.removeChild(errorButton[1]);
+      errorButton[0].textContent = 'Выбрать изображение другого формата';
+      errorButton[0].style.padding = '15px';
     };
 
     if (typeCoincidence) {
