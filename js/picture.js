@@ -19,12 +19,12 @@
   });
 
   var pictureClickHandler = function (e) {
-    document.body.classList.add('modal-open');
 
     var picture = e.path.find(function (it) {
       return (it.classList) ? it.classList.contains('picture') : false;
     });
     if (picture) {
+      document.body.classList.add('modal-open');
       var currentImgSrc = picture.querySelector('.picture__img').getAttribute('src');
 
       currentPicture = window.data.photos.find(function (it) {

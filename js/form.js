@@ -10,12 +10,6 @@
   var commentTextareaElement = document.querySelector('.text__description');
 
 
-  // открытие и закрытие окна редактирования фото
-  uploadFile.addEventListener('change', function () {
-    imgUploadOverlay.classList.remove('hidden');
-    window.getOriginSlider();
-  });
-
   var resetFormHandler = function () {
     imgUploadOverlay.classList.add('hidden');
     window.getOriginSlider();
@@ -62,7 +56,8 @@
     uploadFile: uploadFile,
     imgUploadOverlay: imgUploadOverlay,
     formUpload: formUpload,
-    resetFormHandler: resetFormHandler
+    resetFormHandler: resetFormHandler,
+    uploadSubmitElement: uploadSubmitElement
   };
 
 
