@@ -38,8 +38,8 @@
       });
 
       document.addEventListener('keydown', function (evt) {
-        if (window.util.pressEsc) {
-          modalCloseHanler(evt);
+        if (window.util.pressEsc(evt)) {
+          modalCloseHanler();
         }
       });
     }
