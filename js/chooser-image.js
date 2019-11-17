@@ -5,7 +5,6 @@
   var uploadFileElement = document.querySelector('input#upload-file');
   var imgUploadPreviewElement = document.querySelector('.img-upload__preview img');
   var effectsPreviewCollection = document.querySelectorAll('.effects__list .effects__preview');
-  var errorTitle = document.querySelector('.error__title');
   var errorFormatElement;
 
 
@@ -17,11 +16,11 @@
     });
 
     var errorFormatHandler = function () {
-      document.querySelector('main').appendChild(error);
+      window.load.responseFormHandler();
+      document.querySelector('main').appendChild(window.load.error);
       errorFormatElement = document.querySelector('.error');
-      console.log(errorFormatElement);
-      console.log(errorTitle);
-      // errorTitle.textContent = 'Неверный формат изображения';
+      var errorTitle = errorFormatElement.querySelector('.error__title');
+      errorTitle.textContent = 'Неверный формат изображения';
     };
 
     if (typeCoincidence) {
@@ -36,9 +35,6 @@
       window.getOriginSlider();
     } else {
       errorFormatHandler();
-
-      // uploadFileElement.setCustomValidity("Неверный формат изображения");
-      // window.form.uploadSubmitElement.click();
     }
   });
   var getPreviewImage = function (src) {

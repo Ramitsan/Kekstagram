@@ -76,4 +76,9 @@
     }
   });
 
+  window.load = {
+    responseFormHandler: responseFormHandler,
+    error: error
+  };
+
 })();
