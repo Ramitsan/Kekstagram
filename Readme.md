@@ -17,6 +17,8 @@
 - сортировка фотографий по различным параметрам,
 - доступность всех активных элементов с клавиатуры.
 
+GitHub Pages: https://ramitsan.github.io/877447-technomart-24/
+
 ---
 
 <a href="https://htmlacademy.ru/intensive/javascript"><img align="left" width="50" height="50" alt="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/javascript/logo-for-github-2.png"></a>
