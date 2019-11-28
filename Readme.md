@@ -4,11 +4,6 @@
 Наставник: [Алексей Зольников](https://htmlacademy.ru/profile/id870391).
 
 ---
-
-_Не удаляйте и не обращайте внимание на файлы:_<br>
-_`.editorconfig`, `.eslintrc`, `.gitattributes`, `.gitignore`, `.travis.yml`, `package-lock.json`, `package.json`._
-
----
 Кекстаграм — сервис просмотра изображений. Пользователям предоставлена возможность загружать свои фотографии или просматривать фотографии, загруженные ранее другими пользователями.
 
 На JavaScript написаны:
@@ -30,3 +25,8 @@ _`.editorconfig`, `.eslintrc`, `.gitattributes`, `.gitignore`, `.travis.yml`, `p
 
 [travis-image]: https://travis-ci.com/htmlacademy-javascript/877447-kekstagram-18.svg?branch=master
 [travis-url]: https://travis-ci.com/htmlacademy-javascript/877447-kekstagram-18
+
+---
+
+_Не удаляйте и не обращайте внимание на файлы:_<br>
+_`.editorconfig`, `.eslintrc`, `.gitattributes`, `.gitignore`, `.travis.yml`, `package-lock.json`, `package.json`._
