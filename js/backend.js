@@ -1,22 +1,22 @@
 'use strict';
 
-(function() {
-  var URL_SAVE = 'https://21.javascript.pages.academy/kekstagram';
-  var URL_LOAD = 'https://21.javascript.pages.academy/kekstagram/data';
-  var REQUEST_TIMEOUT = 3000; // 3s
-  var REQUEST_STATUS_OK = 200;
-  var REQUEST_STATUS_BAD = 400;
-  var REQUEST_STATUS_NOT_FOUND = 404;
-  var REQUEST_STATUS_SERVER_ERROR = 500;
+(() => {
+  const URL_SAVE = 'https://21.javascript.pages.academy/kekstagram';
+  const URL_LOAD = 'https://21.javascript.pages.academy/kekstagram/data';
+  const REQUEST_TIMEOUT = 3000; // 3s
+  const REQUEST_STATUS_OK = 200;
+  const REQUEST_STATUS_BAD = 400;
+  const REQUEST_STATUS_NOT_FOUND = 404;
+  const REQUEST_STATUS_SERVER_ERROR = 500;
 
 
-  var serverRequest = function(URL, method, data, onLoad, onError) {
-    var xhr = new XMLHttpRequest();
+  const serverRequest = (URL, method, data, onLoad, onError) => {
+    let xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.timeout = REQUEST_TIMEOUT;
     xhr.open(method, URL);
 
-    xhr.addEventListener('load', function() {
+    xhr.addEventListener('load', () => {
       switch (xhr.status) {
         case REQUEST_STATUS_OK:
           onLoad(xhr.response);
@@ -35,11 +35,11 @@
       }
     });
 
-    xhr.addEventListener('error', function() {
+    xhr.addEventListener('error', () => {
       onError('Произошла ошибка соединения');
     });
 
-    xhr.addEventListener('timeout', function() {
+    xhr.addEventListener('timeout', () => {
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
@@ -47,11 +47,11 @@
   };
 
   window.backend = {
-    save: function(data, onLoad, onError) {
+    save: (data, onLoad, onError) => {
       serverRequest(URL_SAVE, 'POST', data, onLoad, onError);
     },
 
-    load: function(onLoad, onError) {
+    load: (onLoad, onError) => {
       serverRequest(URL_LOAD, 'GET', null, onLoad, onError);
     }
   };

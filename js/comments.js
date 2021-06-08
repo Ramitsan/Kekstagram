@@ -1,21 +1,21 @@
 'use strict';
 
-(function () {
+(() => {
 
-  var ShowedComment = {
+  const ShowedComment = {
     START: 0,
     STEP: 5,
   };
-  var showedCommentsNumber = ShowedComment.START;
-  var commentCollection;
+  let showedCommentsNumber = ShowedComment.START;
+  let commentCollection;
 
-  var socialComments = document.querySelector('.social__comments');
-  var commentsShowElement = document.querySelector('.social__comment-count .comments-show');
-  var loaderBtnElement = document.querySelector('.comments-loader');
-  var footerTextInputElement = document.querySelector('.social__footer-text');
+  const socialComments = document.querySelector('.social__comments');
+  const commentsShowElement = document.querySelector('.social__comment-count .comments-show');
+  const loaderBtnElement = document.querySelector('.comments-loader');
+  const footerTextInputElement = document.querySelector('.social__footer-text');
 
-  var renderSocialComments = function (data) {
-    var element = socialComments.querySelector('.social__comment').cloneNode(true);
+  const renderSocialComments = (data) => {
+    let element = socialComments.querySelector('.social__comment').cloneNode(true);
     element.querySelector('.social__picture').src = data.avatar;
     element.querySelector('.social__picture').alt = data.name;
     element.querySelector('.social__text').textContent = data.message;
@@ -23,16 +23,16 @@
     return element;
   };
 
-  var showCommentsInCollection = function (collection) {
-    var nextShowedComment = showedCommentsNumber + ShowedComment.STEP;
+  const showCommentsInCollection = (collection) => {
+    let nextShowedComment = showedCommentsNumber + ShowedComment.STEP;
     if (collection.length > nextShowedComment) {
-      for (var i = showedCommentsNumber; i < nextShowedComment; i++) {
+      for (let i = showedCommentsNumber; i < nextShowedComment; i++) {
         collection[i].style.display = 'flex';
       }
       showedCommentsNumber = nextShowedComment;
       commentsShowElement.textContent = showedCommentsNumber;
     } else {
-      for (var j = showedCommentsNumber; j < collection.length; j++) {
+      for (let j = showedCommentsNumber; j < collection.length; j++) {
         collection[j].style.display = 'flex';
       }
       showedCommentsNumber = collection.length;
@@ -42,9 +42,9 @@
     }
   };
 
-  var appendSocialComments = function (dataArray) {
-    var fragment = document.createDocumentFragment();
-    dataArray.forEach(function (it) {
+  const appendSocialComments = (dataArray) => {
+    let fragment = document.createDocumentFragment();
+    dataArray.forEach((it) => {
       fragment.appendChild(renderSocialComments(it));
     });
     socialComments.innerHTML = '';
@@ -53,7 +53,7 @@
     showCommentsInCollection(commentCollection);
   };
 
-  loaderBtnElement.addEventListener('click', function () {
+  loaderBtnElement.addEventListener('click', () => {
     showCommentsInCollection(commentCollection);
   });
 
@@ -63,7 +63,7 @@
     appendSocialComments: appendSocialComments,
     loaderBtnElement: loaderBtnElement,
 
-    reset: function () {
+    reset: () => {
       showedCommentsNumber = ShowedComment.START;
     }
   };

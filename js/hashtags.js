@@ -1,17 +1,17 @@
 'use strict';
 
-(function () {
+(() => {
 
-  var MAX_HASHTEGS = 5;
-  var MAX_HASHTEG_LENGTH = 20;
-  var hashtagInputElement = document.querySelector('.text__hashtags');
+  const MAX_HASHTEGS = 5;
+  const MAX_HASHTEG_LENGTH = 20;
+  const hashtagInputElement = document.querySelector('.text__hashtags');
 
-  var validateHashtagInput = function (value) {
-    var hashtags = value.split(' ');
+  const validateHashtagInput = (value) => {
+    let hashtags = value.split(' ');
 
     hashtagInputElement.setCustomValidity('');
 
-    hashtags.forEach(function (it, i) {
+    hashtags.forEach((it, i) => {
       if (it[0] !== '#') {
         hashtagInputElement.setCustomValidity('Хэш-тег должен начинаться с символа # (решётка)');
       } else if (it === '#' && it.length === 1) {
@@ -22,16 +22,16 @@
         hashtagInputElement.setCustomValidity('Хэштег не должен превышать ' + MAX_HASHTEG_LENGTH + ' символов');
       } else if (it.split('#').length > 2) {
         hashtagInputElement.setCustomValidity('Хэштеги должны разделяться пробелами');
-      } else if (hashtags.slice(i + 1).find(function (item) {
-        return item === it;
-      })) {
+      } else if (hashtags.slice(i + 1).find((item) => {
+          return item === it;
+        })) {
         hashtagInputElement.setCustomValidity('Хэштеги не должны повторяться');
       }
 
     });
   };
 
-  hashtagInputElement.addEventListener('change', function (evt) {
+  hashtagInputElement.addEventListener('change', (evt) => {
     validateHashtagInput(evt.target.value);
     if (hashtagInputElement.checkValidity()) {
       hashtagInputElement.style.outline = 'none';
@@ -39,7 +39,7 @@
     }
   });
 
-  hashtagInputElement.addEventListener('invalid', function () {
+  hashtagInputElement.addEventListener('invalid', () => {
     hashtagInputElement.style.outline = 'none';
     hashtagInputElement.style.borderColor = '#ff0000';
   });

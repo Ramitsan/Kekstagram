@@ -1,16 +1,15 @@
 'use strict';
 
-(function () {
+(() => {
 
-  var uploadFile = document.querySelector('#upload-file');
-  var imgUploadOverlay = document.querySelector('.img-upload__overlay'); // форма редактирования изображения
-  var uploadCancelElement = document.querySelector('#upload-cancel');
-  var uploadSubmitElement = document.querySelector('#upload-submit');
-  var formUpload = document.querySelector('.img-upload__form');
-  var commentTextareaElement = document.querySelector('.text__description');
+  const uploadFile = document.querySelector('#upload-file');
+  const imgUploadOverlay = document.querySelector('.img-upload__overlay'); // форма редактирования изображения
+  const uploadCancelElement = document.querySelector('#upload-cancel');
+  const uploadSubmitElement = document.querySelector('#upload-submit');
+  const formUpload = document.querySelector('.img-upload__form');
+  const commentTextareaElement = document.querySelector('.text__description');
 
-
-  var resetFormHandler = function () {
+  const resetFormHandler = () => {
     imgUploadOverlay.classList.add('hidden');
     window.getOriginSlider();
     window.hashtags.hashtagInputElement.style.borderColor = '';
@@ -18,35 +17,33 @@
     formUpload.reset();
   };
 
-
-  uploadCancelElement.addEventListener('click', function () {
+  uploadCancelElement.addEventListener('click', () => {
     resetFormHandler();
   });
 
-
   // закрытие по клавише ESC
-  document.addEventListener('keydown', function (e) {
+  document.addEventListener('keydown', (e) => {
     if (window.util.pressEsc(e)) {
       resetFormHandler();
     }
   });
 
   // если фокус в поле ввода хэш-тега, нажатие на Esc не должно приводить к закрытию формы
-  window.hashtags.hashtagInputElement.addEventListener('keydown', function (evt) {
+  window.hashtags.hashtagInputElement.addEventListener('keydown', (evt) => {
     if (window.util.pressEsc) {
       evt.stopPropagation();
     }
   });
 
   // если фокус в поле ввода комментария, нажатие на Esc не должно приводить к закрытию формы
-  commentTextareaElement.addEventListener('keydown', function (evt) {
+  commentTextareaElement.addEventListener('keydown', (evt) => {
     if (window.util.pressEsc) {
       evt.stopPropagation();
     }
   });
 
   // Отправить форму при нажатии на enter
-  uploadSubmitElement.addEventListener('keydown', function () {
+  uploadSubmitElement.addEventListener('keydown', () => {
     if (window.util.pressEnter) {
       imgUploadOverlay.submit();
     }
@@ -59,6 +56,5 @@
     resetFormHandler: resetFormHandler,
     uploadSubmitElement: uploadSubmitElement
   };
-
 
 })();

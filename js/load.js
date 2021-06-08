@@ -1,75 +1,74 @@
 'use strict';
 
-(function () {
-
+(() => {
   // отправка данных на сервер
-  var success = document.querySelector('#success').content.querySelector('.success');
-  var successButtonElement = success.querySelector('.success__button');
-  var error = document.querySelector('#error').content.querySelector('.error');
-  var errorButtonElement = error.querySelector('.error__button');
-  var successElement;
-  var errorElement;
+  const success = document.querySelector('#success').content.querySelector('.success');
+  const successButtonElement = success.querySelector('.success__button');
+  const error = document.querySelector('#error').content.querySelector('.error');
+  const errorButtonElement = error.querySelector('.error__button');
+  let successElement;
+  let errorElement;
 
-  var responseFormHandler = function () {
+  const responseFormHandler = () => {
     window.form.imgUploadOverlay.classList.add('hidden');
     window.form.uploadFile.setAttribute('value', null);
     window.form.resetFormHandler();
   };
 
   // обработчик успешной загрузки
-  var successSaveHandler = function () {
+  const successSaveHandler = () => {
     responseFormHandler();
     document.querySelector('main').appendChild(success);
     successElement = document.querySelector('.success');
   };
 
   // закрытие окна успешной загрузки по клику
-  successButtonElement.addEventListener('click', function () {
+  successButtonElement.addEventListener('click', () => {
     success.remove();
   });
 
   // по ESC
-  document.addEventListener('keydown', function () {
+  document.addEventListener('keydown', () => {
     if (window.util.pressEsc) {
       success.remove();
     }
   });
 
   // по клику на произвольной области
-  success.addEventListener('click', function (e) {
+  success.addEventListener('click', (e) => {
     if (e.target === successElement) {
       success.remove();
     }
   });
 
   // обработчик ошибки
-  var errorSaveHandler = function () {
+  const errorSaveHandler = () => {
     responseFormHandler();
     document.querySelector('main').appendChild(error);
     errorElement = document.querySelector('.error');
   };
 
   // закрытие окна об ошибке по клику
-  errorButtonElement.addEventListener('click', function () {
+  errorButtonElement.addEventListener('click', () => {
     error.remove();
   });
 
   // по ESC
-  document.addEventListener('keydown', function () {
+  document.addEventListener('keydown', () => {
     if (window.util.pressEsc) {
       error.remove();
     }
   });
 
   // по клику на произвольной области
-  error.addEventListener('click', function (e) {
+  error.addEventListener('click', (e) => {
     if (e.target === errorElement) {
       error.remove();
     }
   });
 
   // отправка данных формы
-  window.form.formUpload.addEventListener('submit', function (evt) {
+  window.form.formUpload.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (window.form.formUpload.checkValidity()) {
       window.backend.save(new FormData(window.form.formUpload), successSaveHandler, errorSaveHandler);

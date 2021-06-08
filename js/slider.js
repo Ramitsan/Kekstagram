@@ -1,73 +1,73 @@
 'use strict';
 
-(function () {
+(() => {
 
-  var COEFFICIENT_MAX = 1;
-  var Percent = {
+  const COEFFICIENT_MAX = 1;
+  const Percent = {
     MIN: 0,
     MAX: 100,
   };
-  var PhobosCoefficient = {
+  const PhobosCoefficient = {
     MIN: 0,
     MAX: 3,
   };
-  var HeatCoefficient = {
+  const HeatCoefficient = {
     MIN: 1,
     MAX: 3,
   };
-  var NONE_EFFECT = 'none';
-  var convertProportion = function (coefficient, from, to) {
+  const NONE_EFFECT = 'none';
+  const convertProportion = (coefficient, from, to) => {
     return (to - from) * coefficient + from;
   };
-  var effectMap = {
-    'none': function () {
+  const effectMap = {
+    'none': () => {
       return '';
     },
-    'chrome': function (coefficient) {
+    'chrome': (coefficient) => {
       return 'grayscale(' + coefficient + ')';
     },
-    'sepia': function (coefficient) {
+    'sepia': (coefficient) => {
       return 'sepia(' + coefficient + ')';
     },
-    'marvin': function (coefficient) {
+    'marvin': (coefficient) => {
       return 'invert(' + (coefficient * Percent.MAX) + '%)';
     },
-    'phobos': function (coefficient) {
+    'phobos': (coefficient) => {
       return 'blur(' + convertProportion(coefficient, PhobosCoefficient.MIN, PhobosCoefficient.MAX) + 'px)';
     },
-    'heat': function (coefficient) {
+    'heat': (coefficient) => {
       return 'brightness(' + convertProportion(coefficient, HeatCoefficient.MIN, HeatCoefficient.MAX);
     },
   };
-  var imgElement = document.querySelector('.img-upload__preview');
-  var lineElement = document.querySelector('.effect-level__line');
-  var pinElement = lineElement.querySelector('.effect-level__pin');
-  var depthElement = lineElement.querySelector('.effect-level__depth');
-  var rangeElement = document.querySelector('.effect-level__value');
+  const imgElement = document.querySelector('.img-upload__preview');
+  const lineElement = document.querySelector('.effect-level__line');
+  const pinElement = lineElement.querySelector('.effect-level__pin');
+  const depthElement = lineElement.querySelector('.effect-level__depth');
+  const rangeElement = document.querySelector('.effect-level__value');
 
-  var getMaxValuePinAndDepth = function () {
-    var percentMax = Percent.MAX + '%';
+  const getMaxValuePinAndDepth = () => {
+    let percentMax = Percent.MAX + '%';
     pinElement.style.left = percentMax;
     depthElement.style.width = percentMax;
   };
 
-  var checkedElementValue = '';
-  lineElement.addEventListener('mousedown', function (downEvt) {
-    var coefficient = lineElement.getBoundingClientRect().width / rangeElement.max;
-    var getPinPosition = function (evt) {
+  let checkedElementValue = '';
+  lineElement.addEventListener('mousedown', (downEvt) => {
+    let coefficient = lineElement.getBoundingClientRect().width / rangeElement.max;
+    const getPinPosition = (evt) => {
       rangeElement.value = (evt.clientX - lineElement.getBoundingClientRect().left) / coefficient;
-      var effectLevel = rangeElement.value * coefficient + 'px';
+      let effectLevel = rangeElement.value * coefficient + 'px';
       pinElement.style.left = effectLevel;
       depthElement.style.width = effectLevel;
       imgElement.style.filter = effectMap[checkedElementValue](rangeElement.value / Percent.MAX);
     };
     getPinPosition(downEvt);
 
-    var onMouseMove = function (moveEvt) {
+    const onMouseMove = (moveEvt) => {
       moveEvt.preventDefault();
       getPinPosition(moveEvt);
     };
-    var onMouseUp = function () {
+    const onMouseUp = () => {
       document.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseup', onMouseUp);
     };
@@ -75,22 +75,22 @@
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  var fieldsetElement = document.querySelector('.effect-level');
+  const fieldsetElement = document.querySelector('.effect-level');
 
-  var getOrigin = function () {
+  const getOrigin = () => {
     imgElement.style.filter = '';
     fieldsetElement.style.display = 'none';
     rangeElement.value = Percent.MIN;
   };
 
-  var getEffect = function (evt) {
+  const getEffect = (evt) => {
     imgElement.style.filter = effectMap[evt.target.value](COEFFICIENT_MAX);
     getMaxValuePinAndDepth();
     rangeElement.value = Percent.MAX;
     fieldsetElement.style.display = 'block';
   };
-  var addOnEffectsRadioChange = function (element) {
-    element.addEventListener('change', function (evt) {
+  const addOnEffectsRadioChange = (element) => {
+    element.addEventListener('change', (evt) => {
       checkedElementValue = evt.target.value;
       if (evt.target.value === NONE_EFFECT) {
         getOrigin();
@@ -100,8 +100,8 @@
     });
   };
 
-  var radioCollection = document.querySelectorAll('.effects__list .effects__item .effects__radio');
-  radioCollection.forEach(function (it) {
+  const radioCollection = document.querySelectorAll('.effects__list .effects__item .effects__radio');
+  radioCollection.forEach((it) => {
     addOnEffectsRadioChange(it);
   });
 

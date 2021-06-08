@@ -1,43 +1,43 @@
 'use strict';
 
-(function() {
+(() => {
 
-  var bigPicture = document.querySelector('.big-picture');
-  var bigPictureImg = bigPicture.querySelector('.big-picture__img img');
-  var picturesElement = document.querySelector('.pictures');
-  var btnCancelElement = document.querySelector('.big-picture__cancel');
+  const bigPicture = document.querySelector('.big-picture');
+  const bigPictureImg = bigPicture.querySelector('.big-picture__img img');
+  const picturesElement = document.querySelector('.pictures');
+  const btnCancelElement = document.querySelector('.big-picture__cancel');
 
-  var socialCaption = document.querySelector('.social__caption');
-  var likesCount = document.querySelector('.likes-count');
-  var commentsCount = document.querySelector('.comments-count');
+  const socialCaption = document.querySelector('.social__caption');
+  const likesCount = document.querySelector('.likes-count');
+  const commentsCount = document.querySelector('.comments-count');
 
-  var currentPicture = {};
+  let currentPicture = {};
 
 
-  picturesElement.addEventListener('click', function(e) {
+  picturesElement.addEventListener('click', (e) => {
     pictureClickHandler(e);
   });
 
-  var pictureClickHandler = function(e) {
+  const pictureClickHandler = (e) => {
 
-    var picture = e.path.find(function(it) {
+    let picture = e.path.find((it) => {
       return (it.classList) ? it.classList.contains('picture') : false;
     });
     if (picture) {
       document.body.classList.add('modal-open');
-      var currentImgSrc = picture.querySelector('.picture__img').getAttribute('src');
+      let currentImgSrc = picture.querySelector('.picture__img').getAttribute('src');
 
-      currentPicture = window.data.photos.find(function(it) {
+      currentPicture = window.data.photos.find((it) => {
         return it.url === currentImgSrc;
       });
 
       setBigPictureInfo(currentPicture);
 
-      btnCancelElement.addEventListener('click', function(evt) {
+      btnCancelElement.addEventListener('click', (evt) => {
         modalCloseHanler(evt);
       });
 
-      document.addEventListener('keydown', function(evt) {
+      document.addEventListener('keydown', (evt) => {
         if (window.util.pressEsc(evt)) {
           modalCloseHanler();
         }
@@ -45,7 +45,7 @@
     }
   };
 
-  var modalCloseHanler = function() {
+  const modalCloseHanler = () => {
     document.body.classList.remove('modal-open');
     bigPicture.classList.add('hidden');
     window.comments.loaderBtnElement.classList.remove('hidden');
@@ -54,7 +54,7 @@
   };
 
 
-  var setBigPictureInfo = function(picture) {
+  const setBigPictureInfo = (picture) => {
     bigPictureImg.setAttribute('src', picture.url);
     socialCaption.textContent = picture.description;
     likesCount.textContent = picture.likes;
