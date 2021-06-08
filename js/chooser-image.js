@@ -24,7 +24,7 @@
       const errorButtons = errorFormatElement.querySelector('.error__buttons');
       const errorButton = errorFormatElement.querySelectorAll('.error__button');
       errorButtons.removeChild(errorButton[1]);
-      errorButton[0].textContent = 'Выбрать изображение другого формата';
+      errorButton[0].textContent = `Выбрать изображение другого формата`;
       errorButton[0].style.padding = '15px';
     };
 
@@ -44,7 +44,7 @@
   });
   const getPreviewImage = (src) => {
     effectsPreviewCollection.forEach((it) => {
-      it.style.backgroundImage = 'url(' + src + ')';
+      it.style.backgroundImage = `url(${src})`;
     });
   };
 })();

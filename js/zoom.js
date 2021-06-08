@@ -13,8 +13,8 @@
   const previewImgElement = document.querySelector('.img-upload__preview img');
 
   const setImgScale = (scale) => {
-    previewImgElement.style.transform = 'scale(' + (scale / SCALE_MAX) + ')';
-    scaleControlValue.setAttribute('value', scale + '%');
+    previewImgElement.style.transform = `scale(${scale / SCALE_MAX})`;
+    scaleControlValue.setAttribute('value', `${scale}%`);
     currentScale = scale;
   };
 
@@ -31,7 +31,7 @@
     }
   });
 
-  scaleControlValue.setAttribute('value', currentScale + '%');
+  scaleControlValue.setAttribute('value', `${currentScale}%`);
 
   window.scaleIndicatorDefault = () => {
     setImgScale(SCALE_START);

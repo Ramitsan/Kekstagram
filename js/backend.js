@@ -22,25 +22,25 @@
           onLoad(xhr.response);
           break;
         case REQUEST_STATUS_BAD:
-          onError('Неправильный запрос.  Код ошибки ' + xhr.status);
+          onError(`Неправильный запрос.  Код ошибки  ${xhr.status}`);
           break;
         case REQUEST_STATUS_NOT_FOUND:
-          onError('Страница не найдена. Код ошибки ' + xhr.status);
+          onError(`Страница не найдена. Код ошибки ${xhr.status}`);
           break;
         case REQUEST_STATUS_SERVER_ERROR:
-          onError('Внутренняя ошибка сервера. Код ошибки ' + xhr.status);
+          onError(`Внутренняя ошибка сервера. Код ошибки ${xhr.status}`);
           break;
         default:
-          onError('При загрузке произошла ошибка ' + xhr.status + '. Повторите попытку позже.');
+          onError(`При загрузке произошла ошибка ${xhr.status}. Повторите попытку позже.`);
       }
     });
 
     xhr.addEventListener('error', () => {
-      onError('Произошла ошибка соединения');
+      onError(`Произошла ошибка соединения`);
     });
 
     xhr.addEventListener('timeout', () => {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError(`Запрос не успел выполниться за ${xhr.timeout} мс`);
     });
 
     xhr.send(data);

@@ -15,7 +15,7 @@
     MIN: 1,
     MAX: 3,
   };
-  const NONE_EFFECT = 'none';
+  const NONE_EFFECT = `none`;
   const convertProportion = (coefficient, from, to) => {
     return (to - from) * coefficient + from;
   };
@@ -24,19 +24,19 @@
       return '';
     },
     'chrome': (coefficient) => {
-      return 'grayscale(' + coefficient + ')';
+      return `grayscale(${coefficient})`;
     },
     'sepia': (coefficient) => {
-      return 'sepia(' + coefficient + ')';
+      return `sepia(${coefficient})`;
     },
     'marvin': (coefficient) => {
-      return 'invert(' + (coefficient * Percent.MAX) + '%)';
+      return `invert(${coefficient * Percent.MAX}%)`;
     },
     'phobos': (coefficient) => {
-      return 'blur(' + convertProportion(coefficient, PhobosCoefficient.MIN, PhobosCoefficient.MAX) + 'px)';
+      return `blur(${convertProportion(coefficient, PhobosCoefficient.MIN, PhobosCoefficient.MAX)}px)`;
     },
     'heat': (coefficient) => {
-      return 'brightness(' + convertProportion(coefficient, HeatCoefficient.MIN, HeatCoefficient.MAX);
+      return `brightness(${convertProportion(coefficient, HeatCoefficient.MIN, HeatCoefficient.MAX)})`;
     },
   };
   const imgElement = document.querySelector('.img-upload__preview');
@@ -46,7 +46,7 @@
   const rangeElement = document.querySelector('.effect-level__value');
 
   const getMaxValuePinAndDepth = () => {
-    let percentMax = Percent.MAX + '%';
+    let percentMax = `${Percent.MAX}%`;
     pinElement.style.left = percentMax;
     depthElement.style.width = percentMax;
   };
@@ -56,7 +56,7 @@
     let coefficient = lineElement.getBoundingClientRect().width / rangeElement.max;
     const getPinPosition = (evt) => {
       rangeElement.value = (evt.clientX - lineElement.getBoundingClientRect().left) / coefficient;
-      let effectLevel = rangeElement.value * coefficient + 'px';
+      let effectLevel = `${rangeElement.value * coefficient}px`;
       pinElement.style.left = effectLevel;
       depthElement.style.width = effectLevel;
       imgElement.style.filter = effectMap[checkedElementValue](rangeElement.value / Percent.MAX);
