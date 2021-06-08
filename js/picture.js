@@ -1,6 +1,6 @@
 'use strict';
 
-(function () {
+(function() {
 
   var bigPicture = document.querySelector('.big-picture');
   var bigPictureImg = bigPicture.querySelector('.big-picture__img img');
@@ -14,30 +14,30 @@
   var currentPicture = {};
 
 
-  picturesElement.addEventListener('click', function (e) {
+  picturesElement.addEventListener('click', function(e) {
     pictureClickHandler(e);
   });
 
-  var pictureClickHandler = function (e) {
+  var pictureClickHandler = function(e) {
 
-    var picture = e.path.find(function (it) {
+    var picture = e.path.find(function(it) {
       return (it.classList) ? it.classList.contains('picture') : false;
     });
     if (picture) {
       document.body.classList.add('modal-open');
       var currentImgSrc = picture.querySelector('.picture__img').getAttribute('src');
 
-      currentPicture = window.data.photos.find(function (it) {
+      currentPicture = window.data.photos.find(function(it) {
         return it.url === currentImgSrc;
       });
 
       setBigPictureInfo(currentPicture);
 
-      btnCancelElement.addEventListener('click', function (evt) {
+      btnCancelElement.addEventListener('click', function(evt) {
         modalCloseHanler(evt);
       });
 
-      document.addEventListener('keydown', function (evt) {
+      document.addEventListener('keydown', function(evt) {
         if (window.util.pressEsc(evt)) {
           modalCloseHanler();
         }
@@ -45,7 +45,7 @@
     }
   };
 
-  var modalCloseHanler = function () {
+  var modalCloseHanler = function() {
     document.body.classList.remove('modal-open');
     bigPicture.classList.add('hidden');
     window.comments.loaderBtnElement.classList.remove('hidden');
@@ -54,7 +54,7 @@
   };
 
 
-  var setBigPictureInfo = function (picture) {
+  var setBigPictureInfo = function(picture) {
     bigPictureImg.setAttribute('src', picture.url);
     socialCaption.textContent = picture.description;
     likesCount.textContent = picture.likes;
