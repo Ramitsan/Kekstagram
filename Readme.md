@@ -1,5 +1,7 @@
 # Проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
+![Kekstagram](https://user-images.githubusercontent.com/45296707/134821889-ce896607-4fbc-4c82-9291-3f4a162d3c65.jpg)
+
 Студент: [Ирина Рамицан](https://up.htmlacademy.ru/javascript/18/user/877447). <br>
 Наставник: [Алексей Зольников](https://htmlacademy.ru/profile/id870391).
 
