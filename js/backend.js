@@ -1,8 +1,8 @@
 'use strict';
 
 (() => {
-  const URL_SAVE = 'https://21.javascript.pages.academy/kekstagram';
-  const URL_LOAD = 'https://21.javascript.pages.academy/kekstagram/data';
+  const URL_SAVE = 'https://23.javascript.pages.academy/kekstagram';
+  const URL_LOAD = 'https://23.javascript.pages.academy/kekstagram/data';
   const REQUEST_TIMEOUT = 3000; // 3s
   const REQUEST_STATUS_OK = 200;
   const REQUEST_STATUS_BAD = 400;
