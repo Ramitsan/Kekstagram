@@ -2,7 +2,7 @@
 
 (() => {
   const URL_SAVE = 'https://23.javascript.pages.academy/kekstagram';
-  const URL_LOAD = 'https://23.javascript.pages.academy/kekstagram/data';
+  const URL_LOAD = 'https://ramitsan.github.io/Kekstagram/data.json';
   const REQUEST_TIMEOUT = 3000; // 3s
   const REQUEST_STATUS_OK = 200;
   const REQUEST_STATUS_BAD = 400;
